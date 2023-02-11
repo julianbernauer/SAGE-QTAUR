@@ -1,2 +1,5 @@
 # SAGE-QTAUR
-Manuscript SAGE QTA - "Salbei" is German for SAGE 
+
+This repository accompanies the book "Quantiative Text Analysis Using R" by Julian Bernauer and Anna Wohlmann to be published by SAGE.
+
+It contains replication code and data. 
