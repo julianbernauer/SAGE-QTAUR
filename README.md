@@ -4,4 +4,4 @@ This repository accompanies the book "Quantitative Text Analysis Using R" by Jul
 
 It contains replication code and data. 
 
-The book is mainly build on R code. 
+The book is mainly build on R code, but also contains some Python. 
