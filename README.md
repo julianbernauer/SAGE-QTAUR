@@ -25,3 +25,11 @@ You can learn more about Github in Chapter 1 of the book. Here, we want to quick
 7) through "browse" determine where our code should be stored on your local machine
 8) click ‘Create Project’
 
+## Read RMarkdown files
+Some of the exercise files are written as RMarkdown files. When you look at those files in code,
+you will see all the R code inside so-called chunks, while text is written around them.
+To see the intended form of such files, you need the knitr package. When knitr
+is installed, you have a knit button below the menu bar, fittingly with a ball of wool
+and knitting needles. Through that button, you can create a Word, PDF or HTML
+document out of our files.
+
