@@ -12,7 +12,7 @@ It contains:
 
 The book is mainly build on R code, but also contains some Python. 
 
-Please feel free to contact us for feedback or questions or if you find any errors in the code. We are happy to consider any suggestions for improvement, simply submit a pull request. 
+Please feel free to contact us for feedback or questions or if you find any errors in the code. We are happy to consider any suggestions for improvement; simply submit a pull request. 
 
 ##  Accessing R files 
 You can learn more about Github in Chapter 1 of the book. Here, we want to quickly explain how to get the code from GitHub into an R project on your computer:
@@ -33,3 +33,6 @@ is installed, you have a knit button below the menu bar, fittingly with a ball o
 and knitting needles. Through that button, you can create a Word, PDF or HTML
 document out of our files.
 
+## Need help?
+If you have questions or the solutions of our exercises aren't working for you, you can ask the authors and other readers questions in the issue tab.
+Make sure to first use the tools we gave you in the book to figure out the issue, e.g., check stack overflow. Then, ask the question as precisely as possible.
