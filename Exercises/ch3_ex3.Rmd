@@ -9,7 +9,7 @@ First, you need to install or load *quanteda*.
 ```{r warning=FALSE}
 library(quanteda)
 ```
-
+1)
 ```{r warning=FALSE}
 we_love_R <- c("R is fun to learn, and there is so much to do.")
 we_love_data <- c("Loading datasets into R and exploring them is great. 
@@ -42,7 +42,7 @@ summary(corpus_polidoc, n=5)
 ```
 
 
-3) If you choose the genius API, go to this website: [https://docs.genius.com/#/getting-started-h1](https://docs.genius.com/#/getting-started-h1), which tells you how to get started with the Genius API. First we register and get a client id, secret and access token.
+3) If you choose the Genius API, go to this website: [https://docs.genius.com/#/getting-started-h1](https://docs.genius.com/#/getting-started-h1), which tells you how to get started with the Genius API. First, we register and get a client ID, secret, and access token.
 Back in R, you need to load or install *geniusr*. To get more info on how to use the API we visit [https://ewenme.github.io/geniusr/](https://ewenme.github.io/geniusr/)
 ```{r warning=FALSE}
 library(geniusr)
@@ -53,7 +53,7 @@ You can save your access token by entering it manually after running this line: 
 genius_token()
 ```
 
-Now we wanted to check, if loading the lyrics of a song is legal, so we check:
+Now, we wanted to check if loading the lyrics of a song is legal, so we check:
 ```{r warning=FALSE}
 library(robotstxt)
 ```
@@ -61,14 +61,14 @@ library(robotstxt)
 ```{r}
 paths_allowed("https://genius.com/Nura-fair-lyrics")
 ```
-Additionally check the documentation on their website.
+Additionally, check the documentation on their website.
 
 The geniusr documentation tells us how to find a song.
-First we need the song ID, which we get by searching for the song:
+First, we need the song ID, which we get by searching for the song:
 ```{r}
 search_song("fair Nura", n_results = 5)
 ```
-The first result is my favourite song, so we can now access the lyrics through the ID.
+The first result is my favorite song, so we can now access the lyrics through the ID.
 
 This is a dataframe with informations about the song and the album it is on:
 ```{r}
@@ -82,7 +82,7 @@ And here is the lyrics:
 ```{r}
 get_lyrics_id(song_id = "7105453")
 ```
-Alternatively you could get the lyrics through the song url as well:
+Alternatively, you could get the lyrics through the song url as well:
 ```{r}
 get_lyrics_url("https://genius.com/Nura-fair-lyrics")
 ```
