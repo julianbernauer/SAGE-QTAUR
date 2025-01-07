@@ -1,0 +1,18 @@
+---
+title: "ch7_exercises"
+author: "Anna"
+date: "2025-01-07"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1) See my example in picture format
+
+2)
+The parameters we choose are..
+
+
+3)

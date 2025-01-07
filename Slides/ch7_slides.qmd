@@ -4,20 +4,33 @@ format: pptx
 editor: visual
 ---
 
-## Quarto
+## Content
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+• An evaluation framework with face, convergent and construct validity
 
-## Bullets
+• Validating QTA populism measures
 
-When you click the **Render** button a document will be generated that includes:
+• Hyperparameter tuning of LDA and word embeddings
 
--   Content authored with markdown
--   Output from executable code
+• Using pre-trained models through fine-tuning
 
-## Code
+• Evaluating a topic model with statistical validation, semantic validation and predictive validation
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+• Coding reliability
+
+(• Interlude: Data processing and the environement)
+
+## Face, convergent and construct validity
+
+def + populism example code
+
+## Hyperparameter Tuning
+
+LDA
+
+Word2Vec
+
+Pretrained models
 
 ```{r}
 1 + 1
