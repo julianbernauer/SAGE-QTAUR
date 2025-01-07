@@ -1,0 +1,71 @@
+---
+title: "ch6_ex"
+author: "Anna"
+date: "2025-01-07"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1)
+Download the data of your choice and create a dfm: REPLACE MANIFESTOS WITH AUSTRIA
+```{r}
+
+
+library(readtext)
+library(quanteda) #read in necessary packages
+manifestos_df<- readtext(paste0(datadir,"/06_manifestos_ex/manifestos"), encoding= "UTF-8") #read in data from folder
+country <- c("Austria", "France", "France", "France", "France", "France") #add a country variable 
+party <- c("Parti Socialiste", "Parti Socialiste") #party of manifesto variable - same order as in folder!
+year <- c("2012", "2017", "2012", "2017", "2012", "2017", "2010", "2015", "2017", "2010", "2015", "2017") #year of manifesto variable
+manifestos_df$country <- country 
+manifestos_df$year <- year
+manifestos_df$party <- party #add additional variables to data frame
+
+corpus_manifestos <- corpus(manifestos_df) #turn dataframe into corpus
+summary(corpus_manifestos) #print corpus summary
+
+dfm_aus <-
+  quanteda::dfm(corpus_manifestos %>%
+                  quanteda::tokens(
+                    remove_punct = TRUE,
+                    remove_numbers = TRUE,
+                    remove_symbols = TRUE,
+                    remove_url = TRUE)) %>%
+    quanteda::dfm_remove(stopwords("de")) %>% 
+  quanteda::dfm_wordstem(language = "de")
+head(dfm_aus)
+
+```
+
+Run Wordfish:
+```{r}
+fish_aus <- textmodel_wordfish(dfm_aus, dir = c(3,5)) #ÄNDERN 3,5
+summary(fish_aus, n = 6) #n ANPASSEN
+```
+
+You can visualize the results:
+```{r} 
+textplot_scale1d(fish_aus, doclabels=fish_uk$x@docvars$party) #Labels anpassen
+```
+
+
+2)
+For Word2Vec we start from the corpus:
+```{r}
+library(word2vec)
+clean_doc <- txt_clean_word2vec(corpus_manifestos[["documents"]][["texts"]], ascii = TRUE, alpha = TRUE, tolower = TRUE, trim = TRUE)
+library(stopwords)
+set.seed(45) #same results every run
+model_w2v <- word2vec(clean_doc, stopwords = stopwords("en")) #run model
+```
+
+Text predictions
+for ideology
+```{r}
+set.seed(5)
+predict(model_w2v, "politics", type = "ideology", top_n = 5)
+```
+
