@@ -6,19 +6,38 @@ editor: visual
 
 ## Quarto
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+• Book summary
+
+• Fighting the error monster
+
+• Presenting QTA to a broader public with best practices
+
+• Closing remarks
 
 ## Bullets
 
-When you click the **Render** button a document will be generated that includes:
+## Homework
 
--   Content authored with markdown
--   Output from executable code
+1\) Look back on your journey with this book; what have you learned? Is there anything you need more information about?
 
-## Code
+2\) What is your favourite data source from the book?
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+3\) What is your favourite machine learning method?
+
+Exercises:
+
+Read the case study Measuring ideological positions using QTA by Jihed Ncib
+
+1\) Take a method you like from this book, call a loved one who doesn’t know anything about QTA, and explain it to them in a way they understand.
+
+2\) What is wrong with this code?
 
 ```{r}
-1 + 1
+
+fff_dfm <- dfm(fff_toks_txt)
+fff_dfm <- dfm_remove(fff_dfm, stopwords("english")
+head(fff_dfm, 10, n = 10)
+
 ```
+
+3\) Start graded project
