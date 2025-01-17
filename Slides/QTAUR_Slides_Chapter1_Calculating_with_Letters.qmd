@@ -1,0 +1,50 @@
+---
+title: "QTA Using R"
+subtitle: "Chapter 1: Calculating with Letters"
+author: "Julian Bernauer and Anna Wohlmann"
+date: "Spring 2025"
+output: 
+  ioslides_presentation:
+    incremental: false
+    widescreen: false 
+    smaller: false 
+---
+
+```{r "knitr config", cache = FALSE, include=FALSE}
+require("knitr")
+#opts_knit$set(root.dir = "C:/DRJB/QTA Kurs CDSS/")
+```
+
+
+## Agenda 
+
+1. Jumping into text as data
+2. A brief tour of the book
+3. Web resources and learning features
+4. Building blocks of QTA in R 
+5. quanteda
+6. Tidyverse 
+7. GitHub 
+
+
+# Building blocks of QTA in R 
+
+## quanteda
+
+## Tidyverse
+
+## GitHub
+
+
+
+## That's All! 
+
+THANK YOU!
+
+*Contact [TEACHER]*
+
+- [Position]
+- [Email]
+- [FON]
+- [GitHub]
+- [Bluesky]
