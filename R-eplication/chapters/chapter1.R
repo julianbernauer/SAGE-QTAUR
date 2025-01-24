@@ -1,4 +1,4 @@
-# Replication Code for Chapter 1
+# Replication Code for Chapter 1: CALCULATING WITH LETTERS
 
 ## Figure 1.1 
 

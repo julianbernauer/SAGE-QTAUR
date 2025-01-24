@@ -1,0 +1,60 @@
+# Chapter 8 of QTAUR: Replication 
+
+## Python code 
+```{python}
+def r_vs_python():
+    print("Python is cool, R is cool")
+r_vs_python()
+```
+
+## R code 
+
+```{r}
+r_py_func <- function(){
+print("Python is cool, R is cool")
+}
+r_py_func()
+```
+
+## Would throw an error
+
+insert python chunk here
+
+```{python}
+def r_vs_python():
+print("Python is cool, R is cool")
+r_vs_python()
+```
+
+
+# Tokens in R using quanteda	
+ ```{r}
+library(quanteda)
+obama_tweet <- c("Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery.")
+tokens_obama_r <- tokens(obama_tweet)
+tokens_obama_r
+```
+
+
+# Tokens in Python using nltk
+```{python}
+from nltk.tokenize import word_tokenize
+obama_tweet = "Zion Williamson seems like an outstanding young
+man as well as an outstanding basketball player. Wishing him a
+speedy recovery."
+tokens_obama_p = word_tokenize(obama_tweet)
+print(tokens_obama_p)
+```
+
+
+
+```{r}
+library(reticulate)
+repl_python()
+from nltk.tokenize import word_tokenize
+obama_tweet = "Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery. https://twitter.com/barackobama."
+obama_repl = word_tokenize(obama_tweet)
+exit
+py$obama_repl
+```
+
