@@ -1,24 +1,26 @@
-# Replication Code for Chapter 2
+### QTAUR Bernauer/Wohlmann 2025
+### Replication Code for Chapter 2
 
+## If needed
 # install.packages(quanteda)
 
-
 library("quanteda")
+library("quanteda.textplots")
+library("tidyverse")
 library("readtext")
 
 # ?quanteda
 
 # Reading text into a data frame object named ’lamar’
-
-lamar <- readtext(paste0(datadir,"/kendrick_lamar"), encoding="UTF-8")
+datadir <- getwd()
+lamar <- readtext(paste0(datadir,"/Data/chapter2/kendrick_lamar"), encoding="UTF-8")
 
 lamar_corpus <- corpus(lamar)
 summary(lamar_corpus)
 
 print(lamar_corpus, max_ndoc=4, max_nchar=50)
 
-as.character(lamar_corpus)[1] #this would print out the first
-song in our corpus
+as.character(lamar_corpus)[1] #this would print out the first song in our corpus
 
 docvars(lamar_corpus, "artist") <- "Kendrick Lamar"
 head(docvars(lamar_corpus))
@@ -32,28 +34,16 @@ head(docvars(lamar_corpus))
 # lamar_corpus_lines <- corpus_reshape(lamar_corpus, to = "sentences")
 # lamar_corpus_para <- corpus_reshape(lamar_corpus, to = "paragraphs")
 
-
 stuff_in_brackets = "(\\[.*?\\])"
 alright_verses <- corpus_segment(lamar_corpus[1],
 pattern = stuff_in_brackets,
 valuetype = "regex")
 summary(alright_verses)
 
-# Load API-generated from local folder saved in 'datadir' data
-into workspace (tibble format)
-load(paste0(datadir,"/lamar_allsongs.Rda"))
+# Load API-generated from local folder saved in 'datadir' data into workspace (tibble format)
+load(paste0(datadir,"/Data/chapter2/lamar_allsongs.Rda"))
 
-lamar_pure <- filter(lamar_allsongs,
-section_artist == "Kendrick Lamar",
-section_name == "Verse 1" |
-section_name == "Verse 2" |
-section_name == "Verse 3" |
-section_name == "Verse 4" |
-section_name == "Verse 5" |
-section_name == "Verse 6" |
-section_name == "Verse" |
-section_name == "Verso"
-)
+lamar_pure <- filter(lamar_allsongs, section_artist == "Kendrick Lamar", section_name %in% c("Verse 1", "Verse 2", "Verse 3", "Verse 4", "Verse 5", "Verse 6", "Verse", "Verso"))
 
 lamar_puresongs <- aggregate(lamar_pure$line,
 list(lamar_pure$song_name),
@@ -153,11 +143,21 @@ labs(x = NULL, y = "Word Frequency Lamar's Lyrics")
 
 
 # Figure 2.3 Word cloud of Kendrick Lamar’s song corpus
-
 textplot_wordcloud(lamar_dfm_trim,
 comparison = F,
 max_words = 100,
 color = "black")
+
+# Save word cloud as high-resolution PNG
+png(filename = paste0(datadir,"/Figures/fig2_3.png"), width = 800, height = 800, res = 400)
+textplot_wordcloud(lamar_dfm_trim,
+                   comparison = F,
+                   max_words = 100,
+                   color = "black")
+dev.off()
+
+
+
 
 
 krsone <- readtext(paste0(datadir,"/krsone_soundofdapolice.txt"),
@@ -172,4 +172,8 @@ textplot_wordcloud(krsone_dfm_trim,
 comparison = F,
 max_words = 100,
 color = "black")
+
+
+
+
 
