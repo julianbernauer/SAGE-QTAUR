@@ -1,5 +1,5 @@
-### QTAUR Bernauer/Wohlmann 2025
-### Replication Code for Chapter 2
+# Julian Bernauer and Anna Wohlmann (2025): Quantitative Text Analysis Using R. London: SAGE.
+# Replication Code for Chapter 2:
 
 ## If needed
 # install.packages(quanteda)
@@ -15,6 +15,7 @@ library("readtext")
 datadir <- getwd()
 lamar <- readtext(paste0(datadir,"/Data/chapter2/kendrick_lamar"), encoding="UTF-8")
 
+# creating a corpus object with quanteda 
 lamar_corpus <- corpus(lamar)
 summary(lamar_corpus)
 
@@ -49,20 +50,16 @@ lamar_puresongs <- aggregate(lamar_pure$line,
 list(lamar_pure$song_name),
 paste, collapse=" ")
 
-
-options(width = 60)
 lamar_songcorpus <- corpus(lamar_puresongs, text_field="x")
 summary(lamar_songcorpus, n=6)
 
 
-options(width = 60)
 kwic(tokens(corpus_subset(lamar_songcorpus,
 Group.1 == "Alright")),
 pattern = "kill", window = 7)
 ## Keyword-in-context with 0 matches.
 
 
-options(width = 60)
 head(kwic(tokens(lamar_songcorpus), pattern = "kill",
 window = 7))
 
@@ -124,31 +121,28 @@ topfeatures(lamar_dfm_alright, n = 10)
 
 
 # Figure 2.1 Most frequent words in Kendrick Lamar’s ‘Alright’
+
 library("ggplot2")
-ggplot(lamar_frequ_alright[1:23,],
-aes(x = reorder(feature, frequency),
-y = frequency)) +
-geom_point(color = "blue") +
-coord_flip() +
-labs(x = NULL, y = "Word Frequency 'Alright'")
+plot <- ggplot(lamar_frequ_alright[1:23,],
+               aes(x = reorder(feature, frequency),
+                   y = frequency)) +
+        geom_point(color = "blue") +
+        coord_flip() +
+        labs(x = NULL, y = "Word Frequency 'Alright'")
+ggsave(filename = paste0(datadir, "/Figures/fig2_1.png"), plot = plot, width = 10, height = 8, dpi = 400)
 
 
 # Figure 2.2 Most frequent words in the Kendrick Lamar song corpus
-ggplot(lamar_frequ[1:23,],
+plot <- ggplot(lamar_frequ[1:23,],
 aes(x = reorder(feature, frequency),
 y = frequency)) +
 geom_point(color = "blue") +
 coord_flip() +
 labs(x = NULL, y = "Word Frequency Lamar's Lyrics")
+ggsave(filename = paste0(datadir, "/Figures/fig2_2.png"), plot = plot, width = 10, height = 8, dpi = 400)
 
 
 # Figure 2.3 Word cloud of Kendrick Lamar’s song corpus
-textplot_wordcloud(lamar_dfm_trim,
-comparison = F,
-max_words = 100,
-color = "black")
-
-# Save word cloud as high-resolution PNG
 png(filename = paste0(datadir,"/Figures/fig2_3.png"), width = 800, height = 800, res = 400)
 textplot_wordcloud(lamar_dfm_trim,
                    comparison = F,
@@ -157,21 +151,25 @@ textplot_wordcloud(lamar_dfm_trim,
 dev.off()
 
 
+# Sound of da police example 
 
+krsone <- readtext(paste0(datadir,"/Data/chapter2/krsone_soundofdapolice.txt"), encoding="UTF-8")
 
-
-krsone <- readtext(paste0(datadir,"/krsone_soundofdapolice.txt"),
-encoding="UTF-8")
 krsone_corpus <- corpus(krsone, text_field="text")
 krsone_dfm_trim <- dfm_remove(dfm(tokens(krsone_corpus,
 remove_punct = TRUE)),
 stopwords(language = "en"))
 
 # Figure 2.4 Word cloud of KRS-One’s ‘Sound of da Police’
+png(filename = paste0(datadir,"/Figures/fig2_4.png"), width = 800, height = 800, res = 400)
 textplot_wordcloud(krsone_dfm_trim,
-comparison = F,
-max_words = 100,
-color = "black")
+                   comparison = F,
+                   max_words = 100,
+                   color = "black")
+dev.off()
+
+
+
 
 
 
