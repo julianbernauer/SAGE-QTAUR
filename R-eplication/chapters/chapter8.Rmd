@@ -1,7 +1,16 @@
 # Chapter 8 of QTAUR: Replication 
 
+```{r setup_08, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(readtext)
+library(quanteda)
+#library(tidyverse)
+library(rvest)
+library(reticulate)
+datadir <- "./data"
+```
+
 ## Python code 
-```{python}
+```{python code_snippet_p, eval=TRUE, echo=TRUE}
 def r_vs_python():
     print("Python is cool, R is cool")
 r_vs_python()
@@ -9,7 +18,7 @@ r_vs_python()
 
 ## R code 
 
-```{r}
+```{r code_snippet_r, eval=TRUE, echo=TRUE}
 r_py_func <- function(){
 print("Python is cool, R is cool")
 }
@@ -20,7 +29,7 @@ r_py_func()
 
 insert python chunk here
 
-```{python}
+```{python code_snippet_p2, eval=F, echo=TRUE}
 def r_vs_python():
 print("Python is cool, R is cool")
 r_vs_python()
@@ -28,28 +37,33 @@ r_vs_python()
 
 
 # Tokens in R using quanteda	
- ```{r}
-library(quanteda)
+```{r R_quant_tok, eval=TRUE, echo=TRUE, warning = FALSE, comment = FALSE}
 obama_tweet <- c("Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery.")
 tokens_obama_r <- tokens(obama_tweet)
 tokens_obama_r
 ```
 
-
 # Tokens in Python using nltk
-```{python}
+```{python python_tokenize, eval = TRUE, echo = TRUE, comment = FALSE}
 from nltk.tokenize import word_tokenize
-obama_tweet = "Zion Williamson seems like an outstanding young
-man as well as an outstanding basketball player. Wishing him a
-speedy recovery."
+obama_tweet = "Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery."
 tokens_obama_p = word_tokenize(obama_tweet)
 print(tokens_obama_p)
 ```
 
 
+# More text processing in R
 
-```{r}
-library(reticulate)
+```{r R_quant_tok2, eval=TRUE, echo=TRUE, warning = FALSE}
+obama_tweet <- c("Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery. https://twitter.com/barackobama.")
+tokens_obama <- tokens(obama_tweet, what="word", remove_punct=TRUE, 
+                       remove_url=TRUE, verbose=TRUE)
+tokens_obama
+```
+
+# [code in markdown]
+
+```{r python_repl, eval=FALSE, echo=TRUE, warning = FALSE}
 repl_python()
 from nltk.tokenize import word_tokenize
 obama_tweet = "Zion Williamson seems like an outstanding young man as well as an outstanding basketball player. Wishing him a speedy recovery. https://twitter.com/barackobama."
@@ -57,4 +71,17 @@ obama_repl = word_tokenize(obama_tweet)
 exit
 py$obama_repl
 ```
+
+
+# [code in background]
+
+source_python("./code/python/obama.py")
+
+
+# embeddings 
+
+# corpus in python 
+
+# bert 
+
 
