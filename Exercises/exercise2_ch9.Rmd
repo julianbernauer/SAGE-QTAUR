@@ -1,0 +1,19 @@
+---
+title: "exercises_ch9"
+author: "Anna"
+date: "2025-01-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+2)
+
+```{r}
+fff_dfm <- dfm(fff_toks_txt)
+fff_dfm <- dfm_remove(fff_dfm, stopwords("english")) #there was a bracket missing here
+head(fff_dfm, 10, n = 10)
+```
+
