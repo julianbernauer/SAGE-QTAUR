@@ -6,7 +6,7 @@ It contains:
 
 - Replication code for the chapters 
 - Data sets used in the book 
-- Answers to the questions in the book (also printed in its back)
+- Answers to the questions in the book
 - Solution code for the exercises in the book 
 - Additional resources including slides 
 
