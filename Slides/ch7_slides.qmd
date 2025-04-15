@@ -1,0 +1,37 @@
+---
+title: "ch7Slides"
+format: pptx
+editor: visual
+---
+
+## Content
+
+• An evaluation framework with face, convergent and construct validity
+
+• Validating QTA populism measures
+
+• Hyperparameter tuning of LDA and word embeddings
+
+• Using pre-trained models through fine-tuning
+
+• Evaluating a topic model with statistical validation, semantic validation and predictive validation
+
+• Coding reliability
+
+(• Interlude: Data processing and the environement)
+
+## Face, convergent and construct validity
+
+def + populism example code
+
+## Hyperparameter Tuning
+
+LDA
+
+Word2Vec
+
+Pretrained models
+
+```{r}
+1 + 1
+```
