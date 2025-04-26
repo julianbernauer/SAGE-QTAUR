@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1) Go to the website polidoc and download manifestos of your choice in one language. Create a dfm and run a wordfish model.
 
 Download the data of your choice and create a dfm: 
-We chose manifestos from Austria from 2017 from polidoc. You can find those in the folder "austria_manifestos"
+We chose manifestos from Austria from 2017 from polidoc.
 ```{r}
 datadir <- "./data_exercises"
 
@@ -62,6 +62,7 @@ textplot_scale1d(fish_aus, doclabels=fish_aus$x@docvars$party)
 To correct your replication you can check the chapter again, we do it here quickly:
 
 ```{r}
+datadir <- "./data_exercises"
 load(paste0(datadir, "\\supercorpus_unstemmed_V4.RData")) #load where you saved it
 library(word2vec)
 clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], ascii = TRUE, alpha = TRUE, tolower = TRUE, trim = TRUE)

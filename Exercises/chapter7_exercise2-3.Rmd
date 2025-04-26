@@ -9,10 +9,57 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-1) See my example in picture format
+1) See my example in pdf format.
 
-2)
-The parameters we choose are..
+2) In Chapter 6, you were asked to create word embeddings. Improve that code based on the new information on word embeddings you learned in this chapter.
+
+For this task we need to load the data and preprocessing from chapter 6, you can open the two files in parallel and load in what you need. We start with the cleaned data here:
+
+```{r}
+head(clean_doc, n =2)
+```
+
+Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sond fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions. The bigger the context window, the more calculations are required. We also use a context window of 5 words for cbow : GO ON https://medium.com/@anmoltalwar/cbow-word2vec-854a043ee8f3
+Of cause we choose the encoding "UTF-8".
+
+```{r}
+word2vec(
+  clean_doc,
+  type = "cbow",
+  dim = 50,
+  window = ifelse(type == "cbow", 5L, 10L),
+  iter = 5L,
+  lr = 0.05,
+  hs = FALSE,
+  negative = 5L,
+  sample = 0.001,
+  min_count = 5L,
+  split = c(" \n,.-!?:;/\"#$%&'()*+<=>@[]\\^_`{|}~\t\v\f\r", ".\n?!"),
+  stopwords = character(),
+  threads = 1L,
+  encoding = "UTF-8"
+)
+```
 
 
-3)
+3) In Chapter 6, you were asked to replicate the LDA model based on party manifestos. Use the code from this chapter to tune hyperparameters and evaluate your model. 
+
+We start with the model from chapter 6:
+
+```{r}
+dtm_aus
+```
+We already evaluated k, so we keep 15 topics here. We now whant to choose further hyperparameters.
+
+```{r eval=FALSE, include=T}
+?topicmodels::LDA
+LDA(x, k, method = "VEM", control = NULL, model = NULL, ...) 
+```
+
+We go deeper than above and evaluate some hyperparameter options:
+
+Choose burnin and iter value based on log-likelihood:
+
+Based on perplexity:
+
+Evaluation with the oolong package:
