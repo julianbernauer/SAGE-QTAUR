@@ -5,6 +5,12 @@ format: pptx
 editor: visual
 ---
 
+```{r}
+#| include: false
+datadir <- "C:\\Users\\AnnaW\\OneDrive\\neu2024\\book\\SAGE-QTAUR\\data\\chapter3"
+
+```
+
 ## Contents
 
 -   How to get text files into R and clean them
@@ -14,8 +20,6 @@ editor: visual
 -   Retrieving song lyrics through an API
 
 -   Preprocessing text data including special characters
-
--   Interlude: The ethics of web scraping and data privacy
 
     ## Contents: notes
 
@@ -114,11 +118,9 @@ for (holiday in holidays){ #for loop
 
 ```
 
-## Interlude: ethics and privacy
-
 ## 
 
-## Homework Questions
+## Homework  Questions
 
 1)  Which R package can be helpful to make sure you are allowed to scrape a webpage?
 2)  Why do we use paste0 when loading in data based on a set directory and a string?
@@ -137,7 +139,7 @@ What did he do wrong?
 
 Read case study (Carlos Gueiros): Labelling political topics with transformer models using YouTube text data
 
-### Homework Exercises
+## Homework Exercises
 
 1)  Create a corpus from a character vector that consists of multiple texts; create the character vector yourself. Hint: You can link character vectors together into one character vector with c().
 

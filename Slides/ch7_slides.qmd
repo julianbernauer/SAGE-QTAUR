@@ -35,3 +35,5 @@ Pretrained models
 ```{r}
 1 + 1
 ```
+
+End: Include mindmap
