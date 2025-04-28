@@ -120,7 +120,7 @@ for (holiday in holidays){ #for loop
 
 ## 
 
-## Homework  Questions
+## Homework Questions
 
 1)  Which R package can be helpful to make sure you are allowed to scrape a webpage?
 2)  Why do we use paste0 when loading in data based on a set directory and a string?
