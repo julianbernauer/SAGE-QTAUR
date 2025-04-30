@@ -19,7 +19,7 @@ For this task we need to load the data and preprocessing from chapter 6, you can
 head(clean_doc, n =2)
 ```
 
-Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sond fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions. The bigger the context window, the more calculations are required. We also use a context window of 5 words for cbow : GO ON https://medium.com/@anmoltalwar/cbow-word2vec-854a043ee8f3
+Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sound fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because or text does have some complexity to it. GO ON
 Of cause we choose the encoding "UTF-8".
 
 ```{r}
@@ -27,7 +27,7 @@ word2vec(
   clean_doc,
   type = "cbow",
   dim = 50,
-  window = ifelse(type == "cbow", 5L, 10L),
+  window = 5L,
   iter = 5L,
   lr = 0.05,
   hs = FALSE,
@@ -41,6 +41,7 @@ word2vec(
 )
 ```
 
+Now we have a first model, in a next step we would evaluate this by looking at models with different hyperparameter values. We want to do this initial check based on our task, data and literature knowledge so we don't run an unnecessary amount of models. You will do the evaluation step in exercise 3.
 
 3) In Chapter 6, you were asked to replicate the LDA model based on party manifestos. Use the code from this chapter to tune hyperparameters and evaluate your model. 
 
