@@ -39,3 +39,8 @@ document out of our files.
 ## Need help?
 If you have questions or the solutions of our exercises aren't working for you, you can ask the authors and other readers questions in the issue tab.
 Make sure to first use the tools we gave you in the book to figure out the issue, e.g., check stack overflow. Then, ask the question as precisely as possible.
+
+The authors of the book wish you success with your projects and happy coding!
+
+Best
+Julian & Anna
