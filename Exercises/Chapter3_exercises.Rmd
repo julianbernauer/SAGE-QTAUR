@@ -1,0 +1,101 @@
+---
+title: "Chapter3_exercises"
+author: "Anna Wohlmann"
+date: "2024-02-05"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+First, you need to install or load *quanteda*.
+```{r warning=FALSE}
+library(quanteda)
+```
+
+1) Create a corpus from a character vector that consists of multiple texts; create the character vector yourself. 
+Hint: You can link character vectors together into one character vector with c().
+
+```{r warning=FALSE}
+we_love_R <- c("R is fun to learn, and there is so much to do.")
+we_love_data <- c("Loading datasets into R and exploring them is great. 
+                  We can learn so many new things about whatever interests us.")
+we_love_QTA <- c("QTA is fun, too. 
+                 We can analyse so much text at once.
+                 We can even create colorful plots!")
+what_we_love <- c(we_love_R, we_love_data, we_love_QTA)
+```
+
+```{r warning=FALSE}
+what_we_love_corpus <- corpus(what_we_love)
+summary(what_we_love_corpus)
+```
+
+2) Go to the polidoc page (shiny.mzes.uni-mannheim.de/polidoc) and download a few party manifestos of your choice (as .txt), read them into R with the *readtext* package, and create a corpus. Now you can play with that data: add document-level variables, tokenize and create plots. Use the examples from chapters 2 and 3 as a guide.
+
+
+First, you need to load or install the required packages for this exercise. You need *readtext* and *quanteda*.
+```{r warning=FALSE}
+library(readtext)
+library(quanteda)
+```
+
+Go to the polidoc site, register, and choose countries, years, or parties you are interested in. I chose the national manifestos of the  2010 election in the Czech Republic. Download them into a folder in your R working directory; my subfolder is exercise3. Your data frame needs a name; I chose df_polidoc.
+```{r warning=FALSE}
+df_polidoc <- readtext(paste0(datadir,"/exercise3"), encoding="UTF8")
+head(df_polidoc)
+```
+
+The corpus() function applied to the data frame df_polidoc results in a corpus, I called corpus_polidoc.
+```{r warning=FALSE}
+corpus_polidoc <- corpus(df_polidoc)
+summary(corpus_polidoc, n=5)
+```
+
+
+3) Sign up for a Genius API (or another API of your choice). Check the terms of use to make sure what you want to do is legal. Store your genius token in R. Now load the lyrics to your favourite song in R.
+
+If you choose the Genius API, go to this website: [https://docs.genius.com/#/getting-started-h1](https://docs.genius.com/#/getting-started-h1), which tells you how to get started with the Genius API. First, we register and obtain a client ID, secret, and access token.
+Back in R, you need to load or install *geniusr*. To get more info on how to use the API we visit [https://ewenme.github.io/geniusr/](https://ewenme.github.io/geniusr/)
+```{r warning=FALSE}
+library(geniusr)
+```
+
+You can save your access token by entering it manually after running this line:
+```{r warning=FALSE, include=FALSE, echo=T}
+genius_token()
+```
+
+Now, we wanted to check if loading the lyrics of a song is legal:
+```{r warning=FALSE}
+library(robotstxt)
+```
+
+```{r}
+paths_allowed("https://genius.com/Nura-fair-lyrics")
+```
+Additionally, check the documentation on their website.
+
+The geniusr documentation tells us how to find a song.
+First, we need the song ID, which we get by searching for the song:
+```{r}
+search_song("fair Nura", n_results = 5)
+```
+The first result is my favorite song, so we can now access the lyrics through the ID.
+
+This is a data frame with information about the song and the album it is on:
+```{r}
+get_song_df("7105453")
+```
+
+
+And here is the lyrics:
+```{r}
+get_lyrics_id(song_id = "7105453")
+```
+Alternatively, you could get the lyrics through the song URL as well:
+```{r}
+get_lyrics_url("https://genius.com/Nura-fair-lyrics")
+```
+
+
+

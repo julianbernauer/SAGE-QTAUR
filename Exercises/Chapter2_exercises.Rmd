@@ -1,0 +1,7 @@
+
+1. Install and load the quanteda package into R. Call the help function for the package
+and have a look.
+2. Create a few text files of your choosing and read them into R with the readtext()
+command. Convert the data frame object into a corpus and summarise what you have.
+3. Convert the corpus into a dfm, remove stopwords and display a word cloud. Does it tell
+you something meaningful about the texts?

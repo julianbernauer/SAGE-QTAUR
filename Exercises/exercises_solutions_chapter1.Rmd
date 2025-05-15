@@ -1,9 +1,0 @@
-1. Visit the quanteda documentation at https://quanteda.io/reference/index.html and look
-up what the R command corpus_sample() does.
-
-2. Create your own GitHub account.
-
-3. Open the SAGE-QTAUR repository and read the Readme file.
-
-As you're already here, you're good! 
-
