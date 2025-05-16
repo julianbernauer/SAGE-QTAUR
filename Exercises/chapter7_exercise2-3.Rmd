@@ -9,11 +9,17 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-1) See my example in pdf format.
+1) See my example in PDF format.
 
 2) In Chapter 6, you were asked to create word embeddings. Improve that code based on the new information on word embeddings you learned in this chapter.
 
 For this task we need to load the data and preprocessing from chapter 6, you can open the two files in parallel and load in what you need. We start with the cleaned data here:
+
+WORKS?
+```{r}
+load(file = paste0(datadir,"data_exercises/word2vec_cleandoc.rda"))
+```
+
 
 ```{r}
 head(clean_doc, n =2)
@@ -23,7 +29,7 @@ Now we need to make decisions based on the data and our task. Waiting long for o
 For minimum occurrence of words we use 3 (min_count). We already removed stopwords in the clean_doc, so we do not add a stopword vector here. Of cause we choose the encoding "UTF-8". 
 
 ```{r}
-word2vec(
+chosen_model <- word2vec(
   clean_doc,
   type = "cbow",
   dim = 50,
@@ -38,6 +44,13 @@ word2vec(
   threads = 1L,
   encoding = "UTF-8"
 )
+```
+
+You can check the tasks from exercise 6 and see if they changed:
+```{r }
+set.seed(5)
+predict(chosen_model, "ideology", type = "nearest", top_n = 6)
+
 ```
 
 Now we have a first model, in a next step we would evaluate this by looking at models with different hyperparameter values. We want to do this initial check based on our task, data and literature knowledge so we don't run an unnecessary amount of models. You will do the evaluation step in exercise 3.

@@ -71,6 +71,12 @@ set.seed(45) #same results every run
 model_w2v <- word2vec(clean_doc, stopwords = stopwords("en")) #run model
 
 ```
+You will reuse this in chapter 7, to make things easier, already save it:
+```{r}
+save(clean_doc, file = "data_exercises/word2vec_cleandoc.rda")
+```
+
+
 a)	Find out what the six nearest neighbours, meaning most similar words, are to the word “ideology”.
 ```{r }
 set.seed(5)
