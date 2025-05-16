@@ -33,7 +33,11 @@ ggplot(noNA_data, aes(x = awake, y = brainwt, colour = vore))+
   ggtitle("Brain Weight and time awake")
 ```
 
-3) No solution, because you choose your own data.
+3) Choose another dataset from the *ggplot2* datasets and check out the variables. What would be interesting to see graphically?
+Play with different graphs and design choices to make the information as clear as possible.
+If necessary, use *dplyr* to bring the data into the right format.
+
+No solution, because you choose your own data.
 Obtain data through:
 ```{r}
 data()

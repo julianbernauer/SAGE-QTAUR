@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-2)
+2) What is wrong with this code?
 
 ```{r}
 fff_dfm <- dfm(fff_toks_txt)
