@@ -1,5 +1,5 @@
 ---
-title: "ch7_exercises"
+title: "Chapter 7 exercises"
 author: "Anna"
 date: "2025-01-07"
 output: pdf_document

@@ -41,6 +41,7 @@ library(quanteda)
 
 Go to the polidoc site, register, and choose countries, years, or parties you are interested in. I chose the national manifestos of the  2010 election in the Czech Republic. Download them into a folder in your R working directory; my subfolder is exercise3. Your data frame needs a name; I chose df_polidoc.
 ```{r }
+datadir <- "./data_exercises"
 df_polidoc <- readtext(paste0(datadir,"/exercise3"), encoding="UTF8")
 head(df_polidoc)
 ```
