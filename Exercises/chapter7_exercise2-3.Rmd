@@ -19,8 +19,8 @@ For this task we need to load the data and preprocessing from chapter 6, you can
 head(clean_doc, n =2)
 ```
 
-Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sound fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because or text does have some complexity to it. GO ON
-Of cause we choose the encoding "UTF-8".
+Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sound fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because or text does have some complexity to it. Next, we need to choose the number of iterations, here the default is 5, it is probably a good idea to compare 5, 15, 50 iterations, let us choose 15 initially. Next, we set alpha, which word2vec calls "lr" which we keep at 0.05. We keep negative sampling, and the sampling value as is. 
+For minimum occurrence of words we use 3 (min_count). We already removed stopwords in the clean_doc, so we do not add a stopword vector here. Of cause we choose the encoding "UTF-8". 
 
 ```{r}
 word2vec(
@@ -28,14 +28,13 @@ word2vec(
   type = "cbow",
   dim = 50,
   window = 5L,
-  iter = 5L,
+  iter = 15,
   lr = 0.05,
   hs = FALSE,
   negative = 5L,
   sample = 0.001,
-  min_count = 5L,
-  split = c(" \n,.-!?:;/\"#$%&'()*+<=>@[]\\^_`{|}~\t\v\f\r", ".\n?!"),
-  stopwords = character(),
+  min_count = 3,
+  #  stopwords = character(),
   threads = 1L,
   encoding = "UTF-8"
 )
@@ -50,17 +49,29 @@ We start with the model from chapter 6:
 ```{r}
 dtm_aus
 ```
-We already evaluated k, so we keep 15 topics here. We now whant to choose further hyperparameters.
+We already evaluated k, so we keep 15 topics here. We now want to choose further hyperparameters.
+Let us start with one initial model again. Besides our input data and k we need to choose the sampling algorithm
+we test both here. For alpha we keep the recommended 0.5 and we look at different burnin and iter values.
 
-```{r eval=FALSE, include=T}
+Here are models with different hyperparamters we can test:
+```{r }
 ?topicmodels::LDA
-LDA(x, k, method = "VEM", control = NULL, model = NULL, ...) 
+set.seed(50)
+initial_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
+
+vem_model <-topicmodels::LDA(dtm_aus, 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
+
+ch6_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
+
+ch6vem <- topicmodels::LDA(dtm_aus, k = 15, method = "VEM", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 ```
 
-We go deeper than above and evaluate some hyperparameter options:
+We go deeper than in exercise 2 and evaluate some hyperparameter options:
 
 Choose burnin and iter value based on log-likelihood:
 
 Based on perplexity:
+
+Semantic/look at it???
 
 Evaluation with the oolong package:
