@@ -1,5 +1,5 @@
 ---
-title: "exercises_ch4"
+title: "Chapter 4 exercises"
 author: "Anna Wohlmann"
 date: "2024-03-01"
 output: pdf_document
@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 1) Plot the count of animals in each order occurring in the dataset, and make sure the axis labels are readable.
 ```{r}
+library(ggplot2)
 ggplot(msleep, aes(order)) + 
   geom_bar() +
    theme(axis.text.x = element_text(angle = 90, hjust = 1))
