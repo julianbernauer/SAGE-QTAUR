@@ -90,11 +90,11 @@ get_song_df("7105453")
 
 
 And here is the lyrics:
-```{r}
+```{r }
 get_lyrics_id(song_id = "7105453")
 ```
 Alternatively, you could get the lyrics through the song URL as well:
-```{r}
+```{r }
 get_lyrics_url("https://genius.com/Nura-fair-lyrics")
 ```
 
