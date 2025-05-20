@@ -17,6 +17,7 @@ For this task we need to load the data and preprocessing from chapter 6, you can
 
 WORKS?
 ```{r}
+datadir <- "./data_exercises"
 load(file = paste0(datadir,"data_exercises/word2vec_cleandoc.rda"))
 ```
 
