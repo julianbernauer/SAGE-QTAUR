@@ -42,6 +42,7 @@ head(dfm_aus)
 
 ```
 
+
 Run Wordfish:
 We need to rank two texts. Here, we make the justifiable statement that Die Grünen are left of FPÖ.
 ```{r}
@@ -69,13 +70,7 @@ clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], asci
 library(stopwords)
 set.seed(45) #same results every run
 model_w2v <- word2vec(clean_doc, stopwords = stopwords("en")) #run model
-
 ```
-You will reuse this in chapter 7, to make things easier, already save it:
-```{r}
-save(clean_doc, file = "data_exercises/word2vec_cleandoc.rda")
-```
-
 
 a)	Find out what the six nearest neighbours, meaning most similar words, are to the word “ideology”.
 ```{r }
@@ -122,6 +117,11 @@ dfm_sent_aus <-
   quanteda::dfm_wordstem(language = "de")
 head(dfm_sent_aus)
 
+```
+
+Save dfm for chapter 7:
+```{r}
+saveRDS(dfm_sent_aus,file = "dfm_sentences_austria.rds")
 ```
 
 For LDA, we need a DTM: 
