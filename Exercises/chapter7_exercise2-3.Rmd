@@ -17,13 +17,13 @@ For this task we need to load the data and preprocessing from chapter 6:
 
 ```{r}
 datadir <- "./data_exercises"
-<<<<<<< HEAD
+
 load(file = paste0(datadir,"data_exercises/word2vec_cleandoc.rda"))
-=======
+
 load(paste0(datadir, "\\supercorpus_unstemmed_V4.RData")) #load where you saved it
 library(word2vec)
 clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], ascii = TRUE, alpha = TRUE, tolower = TRUE, trim = TRUE)
->>>>>>> c0451a0c36eb68d299128b5b92e7341d82200477
+
 ```
 
 
@@ -66,6 +66,7 @@ Now we have a first model, in a next step we would evaluate this by looking at m
 We start with the model from chapter 6:
 
 ```{r}
+load("dfm_sentences_austria.rds")
 #dfm to dtm
 
 dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
