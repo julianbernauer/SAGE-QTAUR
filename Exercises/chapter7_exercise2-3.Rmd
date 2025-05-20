@@ -13,12 +13,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2) In Chapter 6, you were asked to create word embeddings. Improve that code based on the new information on word embeddings you learned in this chapter.
 
-For this task we need to load the data and preprocessing from chapter 6, you can open the two files in parallel and load in what you need. We start with the cleaned data here:
+For this task we need to load the data and preprocessing from chapter 6:
 
-WORKS?
 ```{r}
 datadir <- "./data_exercises"
+<<<<<<< HEAD
 load(file = paste0(datadir,"data_exercises/word2vec_cleandoc.rda"))
+=======
+load(paste0(datadir, "\\supercorpus_unstemmed_V4.RData")) #load where you saved it
+library(word2vec)
+clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], ascii = TRUE, alpha = TRUE, tolower = TRUE, trim = TRUE)
+>>>>>>> c0451a0c36eb68d299128b5b92e7341d82200477
 ```
 
 
@@ -61,6 +66,10 @@ Now we have a first model, in a next step we would evaluate this by looking at m
 We start with the model from chapter 6:
 
 ```{r}
+#dfm to dtm
+
+dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
+
 dtm_aus
 ```
 We already evaluated k, so we keep 15 topics here. We now want to choose further hyperparameters.
@@ -73,7 +82,7 @@ Here are models with different hyperparamters we can test:
 set.seed(50)
 initial_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
 
-vem_model <-topicmodels::LDA(dtm_aus, 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
+vem_model <-topicmodels::LDA(dtm_aus, k= 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
 
 ch6_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 
@@ -97,32 +106,32 @@ First we need to split the data:
 split dtm direktly? WIE
 ```{r}
 set.seed(34)
-train_index <- sample(seq_len(ndoc(dfm_fr)), size = 0.8 * ndoc(dfm_fr), replace = FALSE)
-dfm_train_fr <- dfm_fr[train_index, ]
-dfm_test_fr <- dfm_fr[-train_index, ]
-dtm_train_fr <- convert(dfm_train_fr, to = "topicmodels") 
-dtm_test_fr <- convert(dfm_test_fr, to = "topicmodels")
+train_index <- sample(seq_len(ndoc(dfm_sent_aus)), size = 0.8 * ndoc(dfm_sent_aus), replace = FALSE)
+dfm_train <- dfm_sent_aus[train_index, ]
+dfm_test <- dfm_sent_aus[-train_index, ]
+dtm_train <- convert(dfm_sent_aus, to = "topicmodels") 
+dtm_test <- convert(dfm_sent_aus, to = "topicmodels")
 ```
 
 Now run the model on 80% of the data:
 ```{r}
 set.seed(50)
-iter100uk_train <- topicmodels::LDA(dtm_train_uk, k = 40, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
+initial_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
 set.seed(50)
-iter100fr_train <- topicmodels::LDA(dtm_train_fr, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100)) 
+vem_model_train <- topicmodels::LDA(dtm_train,  k= 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
 set.seed(50)
-iter1000uk_train <- topicmodels::LDA(dtm_train_uk, k = 40, method = "Gibbs", control = list(alpha = 0.5, burnin = 500, iter =1000))
+ch6_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000))
 set.seed(50)
-iter1000fr_train <- topicmodels::LDA(dtm_train_fr, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 500, iter =1000)) 
+ch6vem_train <- topicmodels::LDA(dtm_train,k = 15, method = "VEM", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 set.seed(50)
 ```
 
 And finally calculate perplexity:
 ```{r}
-topicmodels::perplexity(iter100uk_train, dtm_test_uk) 
-topicmodels::perplexity(iter100fr_train, dtm_test_fr) 
-topicmodels::perplexity(iter1000uk_train, dtm_test_uk) 
-topicmodels::perplexity(iter1000fr_train, dtm_test_fr) 
+topicmodels::perplexity(initial_model_train, dtm_test) 
+topicmodels::perplexity(vem_model_train, dtm_test) 
+topicmodels::perplexity(ch6_model_train, dtm_test) 
+topicmodels::perplexity(ch6vem_train, dtm_test) 
 ```
 
 Additionally, we can look at the resulting categories like we did in chapter 6 to see if the results are logical.
