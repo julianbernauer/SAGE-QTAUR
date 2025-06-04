@@ -1,5 +1,5 @@
 ---
-title: "exercises_ch4"
+title: "Chapter 4 exercises"
 author: "Anna Wohlmann"
 date: "2024-03-01"
 output: pdf_document
@@ -10,7 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 1) Plot the count of animals in each order occurring in the dataset, and make sure the axis labels are readable.
-```{r eval=FALSE, include=FALSE}
+```{r}
+library(ggplot2)
 ggplot(msleep, aes(order)) + 
   geom_bar() +
    theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -24,7 +25,7 @@ you can find them through this tool: https://htmlcolorcodes.com/
 
 Hint: "colour" and "fill" have similar functions, so their adjustment works similarly.
 
-```{r eval=FALSE, include=FALSE}
+```{r}
 noNA_data <- na.omit(msleep)
 ggplot(noNA_data, aes(x = awake, y = brainwt, colour = vore))+
   scale_colour_manual(values = c("#65AB67", "#10C715", "#0C750F", "#365637")) + #you can choose different tones here
@@ -33,4 +34,13 @@ ggplot(noNA_data, aes(x = awake, y = brainwt, colour = vore))+
   ggtitle("Brain Weight and time awake")
 ```
 
-3) [no solution for exercise 3]
+3) Choose another dataset from the *ggplot2* datasets and check out the variables. What would be interesting to see graphically?
+Play with different graphs and design choices to make the information as clear as possible.
+If necessary, use *dplyr* to bring the data into the right format.
+
+No solution, because you choose your own data.
+Obtain data through:
+```{r}
+data()
+```
+

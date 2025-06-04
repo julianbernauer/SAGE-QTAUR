@@ -1,5 +1,5 @@
 ---
-title: "ch6_ex"
+title: "Chapter6_exercises"
 author: "Anna Wohlmann"
 date: "2025-01-07"
 output: pdf_document
@@ -42,8 +42,9 @@ head(dfm_aus)
 
 ```
 
+
 Run Wordfish:
-We need to rank two texts, we make the justifiable statement that Die Grünen are left of FPÖ.
+We need to rank two texts. Here, we make the justifiable statement that Die Grünen are left of FPÖ.
 ```{r}
 library(quanteda.textmodels)
 library(quanteda.textplots)
@@ -59,7 +60,7 @@ textplot_scale1d(fish_aus, doclabels=fish_aus$x@docvars$party)
 
 2) Replicate the code in the k-means section for the word2vec model on the data used here, or choose another text dataset of your choice. You will keep using this model for Exercise 2 of Chapter 7.
 
-To correct your replication you can check the chapter again, we do it here quickly:
+To correct your replication, you can check the chapter again. We do it here quickly:
 
 ```{r}
 datadir <- "./data_exercises"
@@ -69,15 +70,15 @@ clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], asci
 library(stopwords)
 set.seed(45) #same results every run
 model_w2v <- word2vec(clean_doc, stopwords = stopwords("en")) #run model
-
 ```
+
 a)	Find out what the six nearest neighbours, meaning most similar words, are to the word “ideology”.
 ```{r }
 set.seed(5)
 predict(model_w2v, "ideology", type = "nearest", top_n = 6)
 
 ```
-In this data intolerant, dogmatism, obsession and fanaticism are closely related to ideology.
+In this dataset, intolerance, dogmatism, obsession, and fanaticism are closely related to ideology.
 
 b)	Choose your own word and find the words closest to it based on the speeches dataset.
 ```{r }
@@ -85,7 +86,7 @@ set.seed(5)
 predict(model_w2v, "racism", type = "nearest", top_n = 1)
 
 ```
-For racism the nearest neighbor is xenophobia.
+For racism, the nearest neighbor is xenophobia.
 
 c)	Find the embedding vector for the word “speech”. Hint: word2vec has documentation that you can access online.
 
@@ -100,7 +101,7 @@ predict(model_w2v, "speech", type = "embedding")
 
 3) Use the data from Exercise 1. Replicate the LDA analysis from this chapter, finding out how much the chosen parties talk about renewable energy and unemployment. You will keep using this model in Exercise 3 of Chapter 7.
 
-In exercise 1, we worked on the whole document, here we are interested in individual sentences, therefore we need to reshape the corpus and then create a dtm:
+In exercise 1, we worked on the whole document; here, we are interested in individual sentences. Therefore, we need to reshape the corpus and then create a dtm:
 
 ```{r}
 corpus_sent <- corpus_reshape(corpus_manifestos, to = "sentences") #transform into sentence corpus
@@ -118,14 +119,19 @@ head(dfm_sent_aus)
 
 ```
 
-For LDA we need a DTM: 
+Save dfm for chapter 7: NOT WORKING
+```{r}
+saveRDS(dfm_sent_aus,file = "dfm_sentences_austria.rds")
+```
+
+For LDA, we need a DTM: 
 ```{r }
 dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
 ```
 
 Finding k:
 We use the ldatuning package to decide on k.
-```{r warning=FALSE}
+```{r }
 library("ldatuning") #install this package if you haven't yet, then use library
 result_aus <- FindTopicsNumber(
   dtm_aus, #pass dtm
@@ -144,8 +150,8 @@ Fit the LDA model:
 We use the topicmodels package and the k from above.
 ```{r}
 library(topicmodels) #load
-set.seed(50)  #same result if code is run again
-model_aus <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) #burnin and iter will be improved in exerice 3 of chapter 7
+set.seed(50)  #same result if you run the code again
+model_aus <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) #burnin and iter will be improved in exercise 3 of chapter 7
 
 ```
 
@@ -153,14 +159,14 @@ Let's look at the terms to find renewable energy and unemployment:
 ```{r }
 terms(model_aus, 20) 
 ```
-Topic 15 contains "arbeitslos" meaning unemployed. Topic 10 discusses nature but renewable energy is not highly influencal on the topics. You can go deeper into the sentences and their topics to find more information:
+Topic 15 contains "arbeitslos" meaning unemployed. Topic 10 discusses nature, but renewable energy is not highly influential on the topic. You can go deeper into the sentences and their topics to find more information:
 
 ```{r}
 a_doc_topic <- data.frame(topics(model_aus))
 head(a_doc_topic, 5) #just showing the beginning of the table
 ```
 
-We use the corpus on sentence basis to get a dataframe and merge it with the topics:
+We use the corpus on a sentence basis to get a dataframe and merge it with the topics:
 ```{r}
 df_aus_sent <- convert(corpus_sent, to = "data.frame")
 
@@ -177,9 +183,9 @@ unemp_topic <- aus_topics[which(aus_topics$topics.model_aus.=="15"),]
 head(unemp_topic$text) 
 ```
 
-A closer look into the sentences shows again that it is difficult to expect a specific topic, here, general environmental and work and work discrimination related issues are discussed.
+A closer look at the sentences shows again that it is difficult to expect a specific topic; here, general environmental and work-related discrimination issues are discussed.
 
-Now, we want to know out how much the different parties talk about renewable energy and unemployment.We check the length of the topics with nrow and the length of the whole manifesto with the sentences variable in the corpus:
+Now, we want to know how much the different parties talk about renewable energy and unemployment. We check the length of the topics with nrow and the length of the whole manifesto with the sentences variable in the corpus:
 
 ```{r}
 summary(corpus_manifestos) #check length
@@ -190,7 +196,7 @@ summary(corpus_manifestos) #check length
 (nrow(env_topic[ env_topic$party == "FPÖ",])/289)*100
 (nrow(env_topic[env_topic$party == "NEOS",])/1649)*100 
 ```
-As expected, in relation to the manifesto length, the environment/renewable energy topic is most discussed by the green party followed by FPÖ and NEOS.
+As expected, in relation to the manifesto length, the environment/renewable energy topic is most discussed by the Green Party followed by FPÖ and NEOS.
 
 ```{r}
 (nrow(unemp_topic[unemp_topic$party == "Die Grünen",])/677)*100 
@@ -199,4 +205,4 @@ As expected, in relation to the manifesto length, the environment/renewable ener
 (nrow(unemp_topic[ unemp_topic$party == "FPÖ",])/289)*100
 (nrow(unemp_topic[unemp_topic$party == "NEOS",])/1649)*100 
 ```
-The unemployment topic is most discussed by KPÖ and SPÖ.
+KPÖ and SPÖ discuss the unemployment topic the most. Be careful with the interpretation and keep the discussed shortcomings in mind.
