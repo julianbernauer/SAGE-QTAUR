@@ -26,6 +26,8 @@ manifestos_df$country <- country
 manifestos_df$year <- year
 manifestos_df$party <- party #add additional variables to data frame
 
+#save the dataframe:
+save(manifestos_df, file = "data_exercises/Austriadf.RData")
 corpus_manifestos <- corpus(manifestos_df) #turn dataframe into corpus
 summary(corpus_manifestos) #print corpus summary
 

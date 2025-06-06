@@ -16,9 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 For this task we need to load the data and preprocessing from chapter 6:
 
 ```{r}
+library(quanteda)
 datadir <- "./data_exercises"
-
-load(file = paste0(datadir,"data_exercises/word2vec_cleandoc.rda"))
 
 load(paste0(datadir, "\\supercorpus_unstemmed_V4.RData")) #load where you saved it
 library(word2vec)
@@ -64,9 +63,27 @@ Now we have a first model, in a next step we would evaluate this by looking at m
 3) In Chapter 6, you were asked to replicate the LDA model based on party manifestos. Use the code from this chapter to tune hyperparameters and evaluate your model. 
 
 We start with the model from chapter 6:
+You can either just run the chapter 6 code or save it via:
+```{r eval=F}
+save(manifestos_df, file = "data_exercises/Austriadf.RData")
+```
+
 
 ```{r}
-load("dfm_sentences_austria.rds")
+library(topicmodels)
+#load dataframe:
+load("data_exercises/Austriadf.RData")
+corpus_manifestos <- corpus(manifestos_df) #turn dataframe into corpus
+corpus_sent <- corpus_reshape(corpus_manifestos, to = "sentences") 
+dfm_sent_aus <-
+  quanteda::dfm(corpus_sent %>%
+                  quanteda::tokens(
+                    remove_punct = TRUE,
+                    remove_numbers = TRUE,
+                    remove_symbols = TRUE,
+                    remove_url = TRUE)) %>%
+    quanteda::dfm_remove(stopwords("de")) %>% 
+  quanteda::dfm_wordstem(language = "de")
 #dfm to dtm
 
 dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
@@ -74,8 +91,7 @@ dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
 dtm_aus
 ```
 We already evaluated k, so we keep 15 topics here. We now want to choose further hyperparameters.
-Let us start with one initial model again. Besides our input data and k we need to choose the sampling algorithm
-we test both here. For alpha we keep the recommended 0.5 and we look at different burnin and iter values.
+Let us start with one initial model again. Besides our input data and k we need to choose the sampling algorithm we test both here. For alpha we keep the recommended 0.5 and we look at different burnin and iter values for Gibbs.
 
 Here are models with different hyperparamters we can test:
 ```{r }
@@ -83,28 +99,24 @@ Here are models with different hyperparamters we can test:
 set.seed(50)
 initial_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
 
-vem_model <-topicmodels::LDA(dtm_aus, k= 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
+vem_model <-topicmodels::LDA(dtm_aus, k= 15, method = "VEM", control = list(alpha = 0.5)) 
 
 ch6_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
-
-ch6vem <- topicmodels::LDA(dtm_aus, k = 15, method = "VEM", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 ```
 
 We go deeper than in exercise 2 and evaluate some hyperparameter options:
+Because logLik exists in multiple packages, we need to specify that the topicmodels version is used.
 
-Choose burnin and iter value based on log-likelihood:
 ```{r}
 set.seed(50)
-logLik(initial_model) 
-logLik(vem_model)
-logLik(ch6_model)
-logLik(ch6vem)
+topicmodels::logLik(initial_model) 
+topicmodels::logLik(vem_model)
+topicmodels::logLik(ch6_model)
 ```
+The model from Chapter 6 has the best fit, followed by the initial model.
 
-TO DO DATA
 Based on perplexity:
 First we need to split the data:
-split dtm direktly? WIE
 ```{r}
 set.seed(34)
 train_index <- sample(seq_len(ndoc(dfm_sent_aus)), size = 0.8 * ndoc(dfm_sent_aus), replace = FALSE)
@@ -119,11 +131,9 @@ Now run the model on 80% of the data:
 set.seed(50)
 initial_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 10, iter =100))
 set.seed(50)
-vem_model_train <- topicmodels::LDA(dtm_train,  k= 15, method = "VEM", control = list(alpha = 0.5, burnin = 10, iter =100)) 
+vem_model_train <- topicmodels::LDA(dtm_train,  k= 15, method = "VEM", control = list(alpha = 0.5)) 
 set.seed(50)
 ch6_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000))
-set.seed(50)
-ch6vem_train <- topicmodels::LDA(dtm_train,k = 15, method = "VEM", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 set.seed(50)
 ```
 
@@ -132,15 +142,15 @@ And finally calculate perplexity:
 topicmodels::perplexity(initial_model_train, dtm_test) 
 topicmodels::perplexity(vem_model_train, dtm_test) 
 topicmodels::perplexity(ch6_model_train, dtm_test) 
-topicmodels::perplexity(ch6vem_train, dtm_test) 
 ```
+The lowest number here is the VEM model, followed by the chapter 6 model.
 
 Additionally, we can look at the resulting categories like we did in chapter 6 to see if the results are logical.
 
 Evaluation with the oolong package:
 ```{r}
 library(oolong)
-oolong_test <- create_oolong(input_model = model_uk, input_corpus = corpus_uk_sent$text)
+oolong_test <- create_oolong(input_model = ch6_model, input_corpus = corpus_sent$text)
 
 ```
 ```{r}
