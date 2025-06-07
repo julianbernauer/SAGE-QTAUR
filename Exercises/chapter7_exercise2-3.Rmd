@@ -1,6 +1,6 @@
 ---
 title: "Chapter 7 exercises"
-author: "Anna"
+author: "Anna Wohlmann"
 date: "2025-01-07"
 output: pdf_document
 ---
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 2) In Chapter 6, you were asked to create word embeddings. Improve that code based on the new information on word embeddings you learned in this chapter.
 
-For this task we need to load the data and preprocessing from chapter 6:
+For this task, we need to load the data and preprocessing from Chapter 6:
 
 ```{r}
 datadir <- "./data_exercises"
@@ -27,8 +27,8 @@ clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], asci
 head(clean_doc, n =2)
 ```
 
-Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sound fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because or text does have some complexity to it. Next, we need to choose the number of iterations, here the default is 5, it is probably a good idea to compare 5, 15, 50 iterations, let us choose 15 initially. Next, we set alpha, which word2vec calls "lr" which we keep at 0.05. We keep negative sampling, and the sampling value as is. 
-For minimum occurrence of words we use 3 (min_count). We already removed stopwords in the clean_doc, so we do not add a stopword vector here. Of cause we choose the encoding "UTF-8". 
+Now, we need to make decisions based on the data and our task. Waiting long for our test model to load does not sound fun, so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts, but we do have quite a large corpus here, therefore we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because our text does have some complexity to it. Next, we need to choose the number of iterations. The default of iterations is 5, it is probably a good idea to compare 5, 15 and 50 iterations; let us choose 15 initially. Next, we set alpha, which word2vec calls "lr" which we keep at 0.05. We keep negative sampling and the sampling value as is. 
+For minimum occurrence of words, we use 3 (min_count). We already removed stopwords in the clean_doc, so we do not add a stopword vector here. Of course, we choose the encoding "UTF-8". 
 
 ```{r}
 chosen_model <- word2vec(
@@ -59,7 +59,7 @@ Now we have a first model, in a next step we would evaluate this by looking at m
 
 3) In Chapter 6, you were asked to replicate the LDA model based on party manifestos. Use the code from this chapter to tune hyperparameters and evaluate your model. 
 
-We start with the model from chapter 6:
+We start with the model from Chapter 6:
 
 ```{r}
 #dfm to dtm
