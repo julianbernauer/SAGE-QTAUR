@@ -64,8 +64,8 @@ Now we have a first model. In a next step we would evaluate this by looking at m
 
 We start with the model from Chapter 6:
 You can either just run the Chapter 6 code or save it via:
-```{r eval=F}
-save(manifestos_df, file = "data_exercises/Austriadf.RData")
+```{r eval=FALSE, include=FALSE}
+#save(manifestos_df, file = "data_exercises/Austriadf.RData")
 ```
 
 
@@ -142,14 +142,14 @@ topicmodels::perplexity(initial_model_train, dtm_test)
 topicmodels::perplexity(vem_model_train, dtm_test) 
 topicmodels::perplexity(ch6_model_train, dtm_test) 
 ```
-The lowest number here is the VEM model, followed by the chapter 6 model.
+The lowest number here is the VEM model, followed by the initial model.
 
 Additionally, we can look at the resulting categories as we did in Chapter 6 to see if the results are logical.
 
 Evaluation with the oolong package:
 ```{r}
 library(oolong)
-oolong_test <- create_oolong(input_model = ch6_model, input_corpus = corpus_sent$text)
+oolong_test <- create_oolong(input_model = initial_model, input_corpus = corpus_sent$text)
 
 ```
 ```{r}
