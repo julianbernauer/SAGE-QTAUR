@@ -1,6 +1,6 @@
 ---
-title: "ch7_exercises"
-author: "Anna"
+title: "Chapter 7 exercises"
+author: "Anna Wohlmann"
 date: "2025-01-07"
 output: pdf_document
 ---
@@ -9,58 +9,158 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-1) See my example in pdf format.
+1) See my example in PDF format.
 
 2) In Chapter 6, you were asked to create word embeddings. Improve that code based on the new information on word embeddings you learned in this chapter.
 
-For this task we need to load the data and preprocessing from chapter 6, you can open the two files in parallel and load in what you need. We start with the cleaned data here:
+For this task, we need to load the data and preprocessing from Chapter 6:
+
+```{r}
+library(quanteda)
+datadir <- "./data_exercises"
+
+load(paste0(datadir, "\\supercorpus_unstemmed_V4.RData")) #load where you saved it
+library(word2vec)
+clean_doc <- txt_clean_word2vec(corpus_unstemmed[["documents"]][["texts"]], ascii = TRUE, alpha = TRUE, tolower = TRUE, trim = TRUE)
+
+```
+
 
 ```{r}
 head(clean_doc, n =2)
 ```
 
-Now we need to make decisions based on the data and our task. Waiting long for our test model to load doesn't sound fun so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts but we do have a quite large corpus here, so we go with 50 dimensions initially. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because or text does have some complexity to it. GO ON
-Of cause we choose the encoding "UTF-8".
+Now, we need to make decisions based on the data and our task. Waiting long for our test model to load does not sound fun, so we use the faster "cbow" algorithm. We don't want to overfit and reduce time efforts, but we do have quite a large corpus here; therefore, we initially go with 50 dimensions. The bigger the context window, the more calculations are required. We use a context window of 5 words for cbow, because our text has some complexity. Next, we need to choose the number of iterations. The default of iterations is 5. Tt is probably a good idea to compare 5, 15, and 50 iterations; let us choose 15 initially. Next, we set alpha, which word2vec calls "lr" which we keep at 0.05. We keep negative sampling and the sampling value as is. 
+For the minimum occurrence of words, we use 3 (min_count). We already removed stopwords in the clean_doc, so we do not add a stopword vector here. Of course, we choose the encoding "UTF-8". 
 
 ```{r}
-word2vec(
+chosen_model <- word2vec(
   clean_doc,
   type = "cbow",
   dim = 50,
   window = 5L,
-  iter = 5L,
+  iter = 15,
   lr = 0.05,
   hs = FALSE,
   negative = 5L,
   sample = 0.001,
-  min_count = 5L,
-  split = c(" \n,.-!?:;/\"#$%&'()*+<=>@[]\\^_`{|}~\t\v\f\r", ".\n?!"),
-  stopwords = character(),
+  min_count = 3,
+  #  stopwords = character(),
   threads = 1L,
   encoding = "UTF-8"
 )
 ```
 
-Now we have a first model, in a next step we would evaluate this by looking at models with different hyperparameter values. We want to do this initial check based on our task, data and literature knowledge so we don't run an unnecessary amount of models. You will do the evaluation step in exercise 3.
+You can check the tasks from exercise 6 and see if they changed:
+```{r }
+set.seed(5)
+predict(chosen_model, "ideology", type = "nearest", top_n = 6)
+
+```
+
+Now we have a first model. In a next step we would evaluate this by looking at models with different hyperparameter values. We want to do this initial check based on our task, data and literature knowledge so we don't run an unnecessary number of models. You will do the evaluation step in exercise 3.
 
 3) In Chapter 6, you were asked to replicate the LDA model based on party manifestos. Use the code from this chapter to tune hyperparameters and evaluate your model. 
 
-We start with the model from chapter 6:
+We start with the model from Chapter 6:
+You can either just run the Chapter 6 code or save it via:
+```{r eval=FALSE, include=FALSE}
+#save(manifestos_df, file = "data_exercises/Austriadf.RData")
+```
+
 
 ```{r}
+library(topicmodels)
+#load dataframe:
+load("data_exercises/Austriadf.RData")
+corpus_manifestos <- corpus(manifestos_df) #turn dataframe into corpus
+corpus_sent <- corpus_reshape(corpus_manifestos, to = "sentences") 
+dfm_sent_aus <-
+  quanteda::dfm(corpus_sent %>%
+                  quanteda::tokens(
+                    remove_punct = TRUE,
+                    remove_numbers = TRUE,
+                    remove_symbols = TRUE,
+                    remove_url = TRUE)) %>%
+    quanteda::dfm_remove(stopwords("de")) %>% 
+  quanteda::dfm_wordstem(language = "de")
+#dfm to dtm
+
+dtm_aus <- convert(dfm_sent_aus, to = "topicmodels")
+
 dtm_aus
 ```
-We already evaluated k, so we keep 15 topics here. We now whant to choose further hyperparameters.
+We have already evaluated k, so we will keep 15 topics here. We now want to choose further hyperparameters.
+Let us start with one initial model again. Besides our input data and k, we need to choose the sampling algorithm we test both here. For alpha, we keep the recommended 0.5, and we look at different burnin and iter values for Gibbs.
 
-```{r eval=FALSE, include=T}
+Here are models with different hyperparameters we can test:
+```{r }
 ?topicmodels::LDA
-LDA(x, k, method = "VEM", control = NULL, model = NULL, ...) 
+set.seed(50)
+initial_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 100, iter =1000))
+
+vem_model <-topicmodels::LDA(dtm_aus, k= 15, method = "VEM", control = list(alpha = 0.5)) 
+
+ch6_model <- topicmodels::LDA(dtm_aus, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000)) 
 ```
 
-We go deeper than above and evaluate some hyperparameter options:
+We go deeper than in exercise 2 and evaluate some hyperparameter options:
+Because logLik exists in multiple packages, we need to specify that the topicmodels version is used.
 
-Choose burnin and iter value based on log-likelihood:
+```{r}
+set.seed(50)
+topicmodels::logLik(initial_model) 
+topicmodels::logLik(vem_model)
+topicmodels::logLik(ch6_model)
+```
+The model from Chapter 6 has the best fit, followed by the initial model.
 
-Based on perplexity:
+For perplexity, we first need to split the data:
+```{r}
+set.seed(34)
+train_index <- sample(seq_len(ndoc(dfm_sent_aus)), size = 0.8 * ndoc(dfm_sent_aus), replace = FALSE)
+dfm_train <- dfm_sent_aus[train_index, ]
+dfm_test <- dfm_sent_aus[-train_index, ]
+dtm_train <- convert(dfm_sent_aus, to = "topicmodels") 
+dtm_test <- convert(dfm_sent_aus, to = "topicmodels")
+```
+
+Now run the model on 80% of the data:
+```{r}
+set.seed(50)
+initial_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 100, iter =1000))
+set.seed(50)
+vem_model_train <- topicmodels::LDA(dtm_train,  k= 15, method = "VEM", control = list(alpha = 0.5)) 
+set.seed(50)
+ch6_model_train <- topicmodels::LDA(dtm_train, k = 15, method = "Gibbs", control = list(alpha = 0.5, burnin = 1000, iter =3000))
+set.seed(50)
+```
+
+And finally, calculate perplexity:
+```{r}
+topicmodels::perplexity(initial_model_train, dtm_test) 
+topicmodels::perplexity(vem_model_train, dtm_test) 
+topicmodels::perplexity(ch6_model_train, dtm_test) 
+```
+The lowest number here is the VEM model, followed by the initial model.
+
+Additionally, we can look at the resulting categories as we did in Chapter 6 to see if the results are logical.
 
 Evaluation with the oolong package:
+```{r}
+library(oolong)
+oolong_test <- create_oolong(input_model = initial_model, input_corpus = corpus_sent$text)
+
+```
+```{r}
+library("shiny")
+oolong_test$do_word_intrusion_test()
+```
+```{r}
+oolong_test$lock()
+```
+```{r}
+oolong_test
+```
+
+

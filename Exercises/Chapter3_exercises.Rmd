@@ -8,14 +8,14 @@ output:
 ---
 
 First, you need to install or load *quanteda*.
-```{r warning=FALSE}
+```{r}
 library(quanteda)
 ```
 
 1) Create a corpus from a character vector that consists of multiple texts; create the character vector yourself. 
 Hint: You can link character vectors together into one character vector with c().
 
-```{r warning=FALSE}
+```{r}
 we_love_R <- c("R is fun to learn, and there is so much to do.")
 we_love_data <- c("Loading datasets into R and exploring them is great. 
                   We can learn so many new things about whatever interests us.")
@@ -25,7 +25,7 @@ we_love_QTA <- c("QTA is fun, too.
 what_we_love <- c(we_love_R, we_love_data, we_love_QTA)
 ```
 
-```{r warning=FALSE}
+```{r }
 what_we_love_corpus <- corpus(what_we_love)
 summary(what_we_love_corpus)
 ```
@@ -34,19 +34,20 @@ summary(what_we_love_corpus)
 
 
 First, you need to load or install the required packages for this exercise. You need *readtext* and *quanteda*.
-```{r warning=FALSE}
+```{r}
 library(readtext)
 library(quanteda)
 ```
 
 Go to the polidoc site, register, and choose countries, years, or parties you are interested in. I chose the national manifestos of the  2010 election in the Czech Republic. Download them into a folder in your R working directory; my subfolder is exercise3. Your data frame needs a name; I chose df_polidoc.
-```{r warning=FALSE}
+```{r }
+datadir <- "./data_exercises"
 df_polidoc <- readtext(paste0(datadir,"/exercise3"), encoding="UTF8")
 head(df_polidoc)
 ```
 
 The corpus() function applied to the data frame df_polidoc results in a corpus, I called corpus_polidoc.
-```{r warning=FALSE}
+```{r }
 corpus_polidoc <- corpus(df_polidoc)
 summary(corpus_polidoc, n=5)
 ```
@@ -66,7 +67,7 @@ genius_token()
 ```
 
 Now, we wanted to check if loading the lyrics of a song is legal:
-```{r warning=FALSE}
+```{r }
 library(robotstxt)
 ```
 
@@ -89,11 +90,11 @@ get_song_df("7105453")
 
 
 And here is the lyrics:
-```{r}
+```{r }
 get_lyrics_id(song_id = "7105453")
 ```
 Alternatively, you could get the lyrics through the song URL as well:
-```{r}
+```{r }
 get_lyrics_url("https://genius.com/Nura-fair-lyrics")
 ```
 

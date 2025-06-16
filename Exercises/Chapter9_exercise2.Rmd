@@ -1,17 +1,17 @@
 ---
-title: "exercises_ch9"
+title: "Chapter 9 exercise 2"
 author: "Anna"
 date: "2025-01-11"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-2)
+2) What is wrong with this code?
 
-```{r}
+```{r eval=FALSE, include=TRUE}
 fff_dfm <- dfm(fff_toks_txt)
 fff_dfm <- dfm_remove(fff_dfm, stopwords("english")) #there was a bracket missing here
 head(fff_dfm, 10, n = 10)
