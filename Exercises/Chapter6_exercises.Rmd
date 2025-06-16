@@ -119,7 +119,7 @@ head(dfm_sent_aus)
 
 ```
 
-Save dfm for chapter 7: NOT WORKING
+Save dfm for chapter 7:
 ```{r}
 saveRDS(dfm_sent_aus,file = "dfm_sentences_austria.rds")
 ```
