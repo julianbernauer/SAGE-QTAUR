@@ -11,7 +11,10 @@ output:
 ---
 
 ```{r "knitr config", cache = FALSE, include=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-require("knitr", "quanteda", "readtext", "quanteda.textplots")
+library(knitr)
+library(quanteda)
+library(readtext)
+library(quanteda.textplots)
 #opts_knit$set(root.dir = "C:/DRJB/QTA Kurs CDSS/")
 ```
 
@@ -36,10 +39,9 @@ library(quanteda)
 library(readtext)
 library(quanteda.textplots)
 # Reading text into a data frame object named 'sahra'
-sahra <- readtext("./Data/chapter1/bsw_website_231027.txt/Data/chapter1/bsw_website_231027.txt",
-                  encoding="UTF-8")
-sahra <- readtext("https://raw.github.com/julianbernauer/SAGE-QTAUR/tree/master/Data/chapter1/bsw_website_231027.txt",
-                  encoding="UTF-8")
+# sahra <- readtext(paste0(getwd(), "/Data/chapter1/bsw_website_231027.txt"), encoding="UTF-8")
+sahra <- readtext("C:/Users/homeoffice/OneDrive - uni-mannheim.de/SAGE-QTAUR/SAGE-QTAUR/Data/chapter1/bsw_website_231027.txt", encoding="UTF-8")
+# sahra <- readtext("https://raw.github.com/julianbernauer/SAGE-QTAUR/tree/master/Data/chapter1/bsw_website_231027.txt", encoding="UTF-8")
 # Preparing the text
 sahra_dfm_trim <- dfm_remove(dfm(tokens(corpus(sahra),
                                       remove_punct = TRUE)),
