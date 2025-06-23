@@ -1,0 +1,88 @@
+# Answers to end-of-chapter questions
+
+## Chapter 1
+1) What is a text corpus, and how do we create one? 
+
+A text corpus is defined as "A corpus class object containing the original texts, document-level variables, document-level metadata, corpus-level metadata, and default settings for subsequent processing of the corpus" (see https://quanteda.io/reference/corpus.html). It can be created using the `corpus()` command in the *quanteda* R package.See "https://tutorials.quanteda.io/basic-operations/corpus" for further tutorials. A corpus is very useful in QTA as it allows to access the units of text of interest and their properties. 
+
+2) Do you need to rely on tidyverse to perform QTA?
+
+3) What is Git good for?
+
+## Chapter 2
+
+1) What is CRAN?
+On CRAN (https://cran.r-project.org/) you can find most R packages.
+
+2) What does it mean when a document-feature matrix is "sparse"?  
+
+A document-feature matrix is the numerical representation of a text, storing the number of occurrences of words or other tokens cross texts. As especially for shorter texts, many words will not appear at all, entries with '0' can be plenty. The more zeros therea are, the more sparse the 
+
+3) Discuss the pros and cons of wordclouds. 
+
+
+
+## Chapter 3
+
+1) Which R package can be helpful to make sure you are allowed to scrape a webpage?
+```{r warning=FALSE}
+library(robotstxt)
+```
+
+2) Why do we use paste0 when loading in data based on a set directory and a string?
+```{r warning=FALSE}
+data <- readtext(paste0(datadir,"/exercise3"), encoding="UTF8")
+```
+When we want to concatenate (meaning link together) different strings in R, we can use paste(), but paste enters separators between the strings, which can be set through paste("Hello","world", sep="_"). If we don't want any separators, we could just specify sep="" but instead we can use paste0(), which does exactly the same thing. When we have a prior defined directory as "datadir" in the question and we want to add a subfolder to that path, we need to paste them together without a space.
+
+3) Sören loads a text file into R with readtext and prints the content; this is what he sees:
+print("Hi everÿone :Ð My nàme is SÃ¶ren, Î am 24 yeárs old ând I lÔve skiing!")
+What did he do wrong?
+
+These are encoding errors. Possible solutions: Sören should save the text file in UTF-8; Sören should set the standard encoding of R files to UTF-8; Sören should add encoding="UTF8" when reading in the file.
+
+## Chapter 4
+1) What is the dplyr package good for in R?
+
+2) Why does treating texts as a BOW pose problems in the context of sentiment analysis?
+How can these problems be countered?
+
+3) What is the difference between lexical diversity and readability?
+
+## Chapter 5
+1) What are the defining features of supervised machine learning models for text?
+
+2) In which ways does BERT consider the context of words as compared to a BOW approach?
+
+3) Why is the scale produced by Wordscores hard to understand?
+
+## Chapter 6
+1)	What are the defining features of unsupervised machine learning models for text?
+Unsupervised models do not rely on labeled data for training, such as supervised models do. They predict topics, reduce dimensions, or scale text based on its own structure, applying some similarity measure, for example, co-occurrence of words. 
+
+2) What is the difference between word stemming and lemmatisation?	
+Word stemming means going back to the word stem of a word by removing pre- and suffixes and lemmatizations turns the word back into its lemma, the way it is found in a dictionary. While word stems do not need to be valid words in the language, the lemma of a word is.
+
+3)	How is Wordfish identified?
+Wordfish identifies underlying dimensions or ideological positions of text through a bag-of-word approach. It creates a scale out of the texts used based on the relative distribution of words. It only requires you to rank one text as further right on the requested scale than one other, therefore the model is classified as unsupervised scaling.
+
+## Chapter 7
+1) Why is validation so important for QTA?
+In QTA we try to make a model understand the complex concept of text. In texts, words have multiple meanings changing based on the context, they represent different emotions and include concepts like sarcasm or cultural references and the biases of the author. But our models only understand words as vectors or the relative distribution of words, those are always simplifications of the actual meaning of text. Therefore, we need to know if the measure we apply actually measures what we think it measured before we can draw conclusions from the results.
+
+2) Why do we split our data into a training set and a test set?
+Machine learning models learn patterns and relationships from the data they are trained on. However, we need to ensure that our model can generalize well to new, unseen data beyond the training set.
+By separating our data into a training set, used to train the model, and a test set, used to evaluate its performance, we can assess how well the model generalizes to new data. This process helps us guard against overfitting, where the model learns to memorize the training data rather than capturing underlying patterns.
+
+3) What is underfitting?
+Underfitting is the opposite of overfitting. Instead of learning the text we train on too well, it cannot capture the underlying patterns or structure in the training data. This means that the model would also perform poorly on unseen data. In essence, the model fails to learn the complexities of the data and makes overly simplistic predictions. Reasons for underfitting are models that are too simple for complex data, insufficient training data, or the iterations are set too low (for example, in LDA where iterations are a hyperparameter).
+
+## Chapter 8
+1) What are the reticulate ways of using Python?
+
+2) What does REPL stand for?
+
+3) Which Python packages are popular in natural language processing?
+
+## Chapter 9
+The Chapter 9 questions are reflective questions for yourself; your answer is always correct!
