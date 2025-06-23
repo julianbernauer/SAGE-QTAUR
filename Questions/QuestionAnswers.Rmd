@@ -79,8 +79,12 @@ Underfitting is the opposite of overfitting. Instead of learning the text we tra
 
 ## Chapter 8
 1) What are the reticulate ways of using Python?
+First,  
+Second,  
+Third,  
 
 2) What does REPL stand for?
+REPL stands for Read-Eval-Print Loop. It is an interactive programming environment that allows users to enter code, evaluate it, and see the results immediately.
 
 3) Which Python packages are popular in natural language processing?
 
