@@ -10,30 +10,118 @@ output:
     smaller: false 
 ---
 
-```{r "knitr config", cache = FALSE, include=FALSE}
-require("knitr")
+```{r "knitr config", cache = FALSE, include=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(quanteda)
+library(readtext)
+library(quanteda.textplots)
 #opts_knit$set(root.dir = "C:/DRJB/QTA Kurs CDSS/")
 ```
 
 
 ## Agenda 
 
-1. Jumping into text as data
-2. A brief tour of the book
+- Jumpstart QTA with the help of an example using political text
+- A brief tour of the book
+- Introduction to the accompanying web resources and learning features
+- The building blocks of QTA and the brilliant quanteda R package
+- The tidyverse R package
+- A Git/GitHub primer
+
+
+# Jumpstart QTA with the help of an example using political text
+
+Word Cloud Manifesto *Bündnis Sahra Wagenknecht (BSW)*
+
+```{r, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+# R libraries
+library(quanteda)
+library(readtext)
+library(quanteda.textplots)
+# Reading text into a data frame object named 'sahra'
+# sahra <- readtext(paste0(getwd(), "/Data/chapter1/bsw_website_231027.txt"), encoding="UTF-8")
+sahra <- readtext("C:/Users/homeoffice/OneDrive - uni-mannheim.de/SAGE-QTAUR/SAGE-QTAUR/Data/chapter1/bsw_website_231027.txt", encoding="UTF-8")
+# sahra <- readtext("https://raw.github.com/julianbernauer/SAGE-QTAUR/tree/master/Data/chapter1/bsw_website_231027.txt", encoding="UTF-8")
+# Preparing the text
+sahra_dfm_trim <- dfm_remove(dfm(tokens(corpus(sahra),
+                                      remove_punct = TRUE)),
+                             stopwords(language = "de"))
+# A word cloud
+textplot_wordcloud(sahra_dfm_trim,
+                   max_words = 100,
+                   color = "black")
+```
+
+
+
+#  A brief tour of the book
+
+- Chapter 1: Calculating with Letters
+- Chapter 2: Using R for Text Analysis
+- Chapter 3: Text as Data
+- Chapter 4: Extracting and Visualising Information from Text
+- Chapter 5: Supervised Machine Learning for Text Data
+- Chapter 6: Unsupervised Machine Learning for Text Data
+- Chapter 7: Evaluation and Validation of Quantitative Text Analysis
+- Chapter 8: Using Python within R for Quantitative Text Analysis
+- Chapter 9: Communicating Text Analysis
+
+
+
 3. Web resources and learning features
+
+
+## GitHub
+
+
+
+
 4. Building blocks of QTA in R 
+# Building blocks of QTA in R 
+
+triad of R, RStudio and quanteda as major tools
+
+
+
 5. quanteda
 6. Tidyverse 
 7. GitHub 
 
 
-# Building blocks of QTA in R 
+## DFM 
+
+Two things to know early on are the corpus and the document-feature matrix (dfm).
+A corpus is an ‘object containing the original texts, document-level variables,
+document-level metadata, corpus-level metadata, and default settings for subsequent
+processing of the corpus’ (see https://quanteda.io/reference/corpus.html). A dfm can
+be created after taking the tokens (often, words) from a text. The matrix contains the
+word count per text and is a typical starting point for a bag-of-words (BOW) analysis.
+
+
 
 ## quanteda
 
+- Ken Benoit
+
+
+
+
+
+
+
+
+## Boxes 
+
+- Alert Box: Warns of potential pitfalls in R or QTA
+- Definition Box: Introduces, defines or clarifies terms
+- Knowledge Box: Basic knowledge in R that can help you move on in any
+direction
+- Advanced Knowledge Box: Going into more detail; not necessarily required for
+following the story of the book (can be skipped)
+
 ## Tidyverse
 
-## GitHub
+
 
 
 

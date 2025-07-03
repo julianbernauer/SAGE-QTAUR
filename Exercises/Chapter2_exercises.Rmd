@@ -1,7 +1,58 @@
+---
+title: "Chapter2_exercises"
+author: "Julian Bernauer"
+date: "Last edited: 2025-06-23"
+output:
+  pdf_document: default
+  word_document: default
+---
+
 
 1. Install and load the quanteda package into R. Call the help function for the package
 and have a look.
+
+```{r}
+install.packages("quanteda")   
+library(quanteda)
+help(package = "quanteda")  
+```
+
+Note:
+- Before you can install the package, you need to have R and for convenience some editor on your computer.
+- Be aware that quanteda is split into several sub-packages, where quanteda.textmodels, quanteda.textstats, and quanteda.textplots provide additional functionality. Check out https://quanteda.io/ for more information such as the development of quanteda.sentiment and quanteda.tidy. 
+- Select a CRAN mirror that is close to your location when installing packages. In RStudio, you can also click on the Packages tab in the bottom right corner and search for quanteda.
+
+
 2. Create a few text files of your choosing and read them into R with the readtext()
 command. Convert the data frame object into a corpus and summarise what you have.
+
+- Example text files could be journal abstracts, poems, or any other text you find interesting. You can create these files in a text editor and save them with a .txt extension.
+
+The readtext command: 
+
+```{r}
+library(readtext)
+practice_texts <- readtext("C:/Users/homeoffice/OneDrive - uni-mannheim.de/SAGE-QTAUR/SAGE-QTAUR/Data/chapter1/exercise1_2/", encoding = "UTF8")
+practice_texts
+```
+
+Create a corpus from the data frame:
+```{r}
+practice_corpus <- corpus(practice_texts)
+summary(practice_corpus)
+```
+
+- Alternatively, use R to create a character vector with multiple texts: 
+
+```{r}
+texts <- c("This is the first text. It is quite short.",
+            "Here is another text. It is a bit longer than the first one.",
+            "Finally, this is the third text. It contains more information and is the longest of all three.")
+doc_id <- c("text1", "text2", "text3")
+df_texts <- data.frame(doc_id = doc_id, text = texts, stringsAsFactors = FALSE)
+df_texts
+```
+
 3. Convert the corpus into a dfm, remove stopwords and display a word cloud. Does it tell
 you something meaningful about the texts?
+
