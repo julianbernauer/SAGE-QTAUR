@@ -11,13 +11,17 @@ datadir <- "C:\\Users\\AnnaW\\OneDrive\\neu2024\\book\\SAGE-QTAUR\\data\\chapter
 
 ```
 
-## Contents
+## Agenda
 
--   How to get text files into R and clean them
+-   How to get text files into R
+
+-   Party Manifestos
 
 -   Retrieving Wikipedia data
 
 -   Retrieving song lyrics through an API
+
+-   Preprocessing (cleaning) text data
 
 -   Preprocessing text data including special characters
 
@@ -27,11 +31,9 @@ datadir <- "C:\\Users\\AnnaW\\OneDrive\\neu2024\\book\\SAGE-QTAUR\\data\\chapter
 
 bullet points ch3 content:
 
--   dataframe c
+-   scraping and APIs example geniusr package
 
--   manifestos sources c
-
--   readtext c
+<!-- -->
 
 -   process: df to corpus
 
@@ -43,56 +45,90 @@ bullet points ch3 content:
 
 -   more details on stopwords
 
--   Wikipedia data: package c
-
--   loops c
-
 -   handling emojis, urls, hashtags, handles
 
 -   subset function for dfs also for rap music categories
 
 -   regex
 
--   scraping and APIs example geniusr package
-
 -   word frequencies
 
--   ethics/privacy:
+## Getting text files into R
 
-    -   fundamental theories of ethics
+-   where are you getting your data from?
 
-    -   what is privacy, GDPR
+-   in what format is your data?
 
-    -   institutional review bords
+-   R packages for frequently used data types/ sources
 
-    -   apis ethics
+    ```{r}
+    library(readtext)
+    library(getwiki)
+    ```
 
 ## Party manifestos
 
-Sources:
+Log-in to get access:
 
 -   polidoc shiny.mzes.uni-mannheim.de/polidoc
 -   CMP <https://manifesto-project.>wzb.eu/
 
 ## readtext package
 
+-   install or load (library) the package "readtext" and load saved .txt data:
+
 ```{r}
 library(readtext)
 df_uk <- readtext(paste0(datadir,"/UK17"), encoding="UTF-8")
 ```
 
-ⓘ Dataframes (short df) are a tabular data structure that you will come across a lot in R. The data is arranged in rows and columns and can be of different types within one dataframe, for example, numeric or characters. The columns of a dataframe carry the variable names and can be accessed through df\$variablename. Rows can be labelled or have an index number, and therefore all entries can be accessed easily. There are a lot of functions that work on dataframes and other tabular datasets. CSV or Excel can be imported into R as a dataframe, and similarly, a dataframe can be exported into those formats.
+## ⓘ Dataframes (short df)
 
-utf-8:
+```{r}
+df_uk
+```
+
+-   tabular data structure
+
+-   data is arranged in rows and columns
+
+-   can be of different types within one dataframe e.g., numeric or characters
+
+-   columns carry the variable names - access: df\$variablename
+
+-   Rows labelled or index number
+
+-   dataframe can be exported CSV or Excel
+
+## π UTF-8 ("Unicode Transformation Format-8-bit")
+
+```{r}
+encoding="UTF-8"
+
+```
+
+-   character encoding standard that assigns a unique binary code to each character in most of the world's writing systems.
+
+-   UTF-8 uses variable-length encoding, allowing it to efficiently represent both common and less frequently used characters.
+
+-   To make sure that all the symbols in the texts you are analysing in R are displayed correctly, independent of their language or special characters (including emojis), you should make sure to import them in UTF-8.
+
+-   ways to check and change the encoding of text: free editor Notepad++, where there is a menu entry “Encoding” to check and alter the encoding.
+
+-   Besides our text input, to show UTF-8 files correctly, we also want our outputs in UTF-8. To change the standard encoding of R files, go to Tools \> Global Options \> Code \> Saving and set the default text encoding to UTF-8.
+
+-   If you want to change a file you worked with prior to UTF-8 encoding, go to File and click "reopen with encodings", and choose UTF-8 from the list.
 
 ## Wikipedia data
+
+-   R package just to get Wikipedia data:
 
 ```{r}
 library("getwiki")
 diwali <- get_wiki("Diwali",clean = T)
 ```
 
-In a loop (explain):
+-   get more data at once through a loop:
 
 ```{r}
 holidays <- c("Diwali", "Holi", "Christmas","Easter", "Eid_al_Fitr","Eid_al_Adha", "Kathina", "Vesakh", "Pessach", "Jom_Kippur")
@@ -104,15 +140,54 @@ for (holiday in holidays){ #for loop
 
 ```
 
-## APIs
+## ♕ Loops in R
 
-## Example: Genius API
+-   for loop example:
 
-## Work along exercise
+```{r}
+for (holiday in holidays){ #for loop
+  holiday_texts <- c(holiday_texts, get_wiki(holiday, clean = T))
+  Sys.sleep(3) #take a break
+}
+```
+
+-   are invaluable tools for executing repetitive tasks across all elements of a vector.
+
+-   The structure of a for-loop is defined as follows:
+
+    ```{r}
+    for (variable in vector) { do this }
+    ```
+
+-   The loop iterates over each element of the vector until it reaches the end.
+
+    ```{r}
+    (i in vector)
+    ```
+
+-   the 'variable', often referred to as 'i', is utilized to represent each element in the vector sequentially.
+
+-   It's essential to note that if you intend to create a list within the loop, you must ensure that you append elements to the list to avoid overwriting existing entries:
+
+    ```{r}
+    holiday_texts <- c() #empty
+    ```
+
+-   other loops: while-loop, repeat-loop
+
+## APIs - Genius API
+
+-   accessing data
+
+-   ...
+
+-   
+
+## Work along exercise: Preprocessing data
 
 -\> dataset manipulation, preprocessing
 
--   choose one of the datasets above to go through all the functions we introduced in the chapter
+-   load in text data from a .txt file for example party manifestos
 
 ```{r}
 

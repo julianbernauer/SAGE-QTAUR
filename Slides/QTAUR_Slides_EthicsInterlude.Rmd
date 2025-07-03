@@ -1,0 +1,16 @@
+---
+title: "EthicsInterlude"
+author: "Julian Bernauer und Anna Wohlmann"
+format: pptx
+editor: visual
+---
+
+## Agenda
+
+-   fundamental theories of ethics
+
+-   what is privacy, GDPR
+
+-   institutional review bords
+
+-   apis ethics
