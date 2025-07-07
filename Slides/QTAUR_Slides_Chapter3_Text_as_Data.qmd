@@ -27,13 +27,9 @@ datadir <- "C:\\Users\\AnnaW\\OneDrive\\neu2024\\book\\SAGE-QTAUR\\data\\chapter
 
     ## Contents: notes
 
-    !import code from ch3
+    bullet points ch3 content:
 
-bullet points ch3 content:
-
--   scraping and APIs example geniusr package
-
-<!-- -->
+    work-along
 
 -   process: df to corpus
 
@@ -46,8 +42,6 @@ bullet points ch3 content:
 -   more details on stopwords
 
 -   handling emojis, urls, hashtags, handles
-
--   subset function for dfs also for rap music categories
 
 -   regex
 
@@ -62,8 +56,8 @@ bullet points ch3 content:
 -   R packages for frequently used data types/ sources
 
     ```{r}
-    library(readtext)
-    library(getwiki)
+    install.packages("readtext")
+    install.packages("getwiki")
     ```
 
 ## Party manifestos
@@ -155,17 +149,13 @@ for (holiday in holidays){ #for loop
 
 -   The structure of a for-loop is defined as follows:
 
-    ```{r}
-    for (variable in vector) { do this }
-    ```
+    *for (variable in vector) { do this }*
 
 -   The loop iterates over each element of the vector until it reaches the end.
 
-    ```{r}
-    (i in vector)
-    ```
+-   the 'variable', often referred to as 'i', is utilized to represent each element in the vector sequentially:
 
--   the 'variable', often referred to as 'i', is utilized to represent each element in the vector sequentially.
+    *(i in vector)*
 
 -   It's essential to note that if you intend to create a list within the loop, you must ensure that you append elements to the list to avoid overwriting existing entries:
 
@@ -177,11 +167,31 @@ for (holiday in holidays){ #for loop
 
 ## APIs - Genius API
 
--   accessing data
+-   Application Programming Interface
 
--   ...
+-   a way of sharing data from one program to another
 
--   
+-   for us: automated way of retrieving the data we need
+
+-   to find a song on genius.com you would use the search function:
+
+    ![](genius.JPG)
+
+-   instead we use the R package geniusr, validate our token and use a line of code:
+
+    ```{r}
+    library(geniusr)
+    genius_token()
+    search_song("DNA")
+    ```
+
+# Scraping
+
+-   = to legally access the content of web databases in an automated fashion using programming code [@munzert2015]
+
+-   only if there is no API available
+
+-   follow laws and webpage rules
 
 ## Work along exercise: Preprocessing data
 
