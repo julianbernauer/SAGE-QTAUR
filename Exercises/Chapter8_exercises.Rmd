@@ -1,0 +1,34 @@
+---
+title: "Chapter 8: Exercises"
+author: "Julian Bernauer"
+date: "Last edited: 2025-07-11"
+output:
+  pdf_document: default
+  word_document: default
+---
+
+1. Take a method you like from this book, call a loved one who doesn't know anything about QTA, and explain it to them in a way they understand.
+
+*Answer Exercise 1*: The answers to this question are very contingent on the method chosen and the person you want to explain it to. 
+
+An example, explaining the concept of BERT to a 14-year-old child: "Listen kid, stop playing Minecraft and give me one minute of your precious time. You remember your plush toy Elmo, right? Maybe you also know Ernie and Bert from Sesame Street? At work, I stumbled across this thing called BERT, which is an artifical intelligence able to understand text. It's not unlike what you get when you use ChatGPT, after some tweaking you can feed it with a sentence and it will for example tell you if the sentence is about Minecraft. BERT has the maths to look before and after words to understand their meaning and find similar stuff! It needs some training to do so, which makes sense, you won't be able to make a shot if you never play basketball. Let me show you huggingface.co, it's full of similar models all able to solve all kinds of problems, and they have funny names, too."
+
+2. What is wrong with this code?
+
+```{r }
+fff_dfm <- dfm(fff_toks_txt)
+fff_dfm <- dfm_remove(fff_dfm, stopwords("english")
+head(fff_dfm, 10, n = 10)
+```
+
+*Answer Exercise 2*: The code is syntactically correct, but it has a small error in the `dfm_remove` function call. The closing parenthesis for `stopwords("english")` is missing. The corrected code should look like this:
+
+```{r }
+fff_dfm <- dfm(fff_toks_txt)
+fff_dfm <- dfm_remove(fff_dfm, stopwords("english"))
+head(fff_dfm, 10, n = 10)
+```
+
+3. Start your own project! - Happy coding! :)
+
+*Answer Exercise 3*: Nothing to add. All the best! 
