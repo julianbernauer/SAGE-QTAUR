@@ -6,17 +6,26 @@
 A text corpus is defined as "A corpus class object containing the original texts, document-level variables, document-level metadata, corpus-level metadata, and default settings for subsequent processing of the corpus" (see https://quanteda.io/reference/corpus.html). It can be created using the `corpus()` command in the *quanteda* R package.See "https://tutorials.quanteda.io/basic-operations/corpus" for further tutorials. A corpus is very useful in QTA as it allows to access the units of text of interest and their properties. 
 
 2) Do you need to rely on tidyverse to perform QTA?
+No. While the tidyverse is a very useful set of packages for data manipulation and visualization, it is not strictly necessary for QTA. The *quanteda* package provides many functions for text analysis that do not require tidyverse. However, using tidyverse can make data manipulation easier and more intuitive, especially for those familiar with its syntax. 
+
 
 3) What is Git good for?
+
+Actually, Git has been invented by Linus Torvalds, the creator of Linux, to manage the development of the Linux kernel. It is a version control system that allows you to track changes in files and collaborate with others on projects. In the context of QTA, Git can be used to manage code, track changes in data analysis scripts, and collaborate with others on text analysis projects. It helps ensure that you can revert to previous versions of your work if needed and facilitates collaboration by allowing multiple people to work on the same project without overwriting each other's changes. Actually, my impression from some reports is that Torvalds preferred to deal with code suggestions rather than with people. 
+
 
 ## Chapter 2
 
 1) What is CRAN?
 On CRAN (https://cran.r-project.org/) you can find most R packages.
 
+CRAN ("The Comprehensive R Archive Network") hosts R packages, you can check the CRAN site of a package for more information on the package, including information on how to cite it. 
+This page as all available packages by name: https://cran.r-project.org/web/packages/available_packages_by_name.html
+
+
 2) What does it mean when a document-feature matrix is "sparse"?  
 
-A document-feature matrix is the numerical representation of a text, storing the number of occurrences of words or other tokens cross texts. As especially for shorter texts, many words will not appear at all, entries with '0' can be plenty. The more zeros therea are, the more sparse the 
+A document-feature matrix is the numerical representation of a text, storing the number of occurrences of words or other tokens cross texts. As especially for shorter texts, many words will not appear at all, entries with '0' can be plenty. The more zeros there are, the more sparse the 
 
 3) Discuss the pros and cons of wordclouds. 
 

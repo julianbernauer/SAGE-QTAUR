@@ -7,13 +7,19 @@ This repository accompanies the book "Quantitative Text Analysis Using R" by Jul
 
 It contains: 
 
-- Replication code for the chapters 
-- Data sets used in the book 
+For students: 
+- Solutions including code for the exercises in the book 
 - Answers to the questions in the book
-- Solution code for the exercises in the book 
-- Additional resources including slides 
 
-The book is mainly build on R code, but also contains some Python. 
+For teachers:
+- Slides for the book chapters (under continuous development)
+
+And: 
+- Replication code for the chapters (under construction)
+- Data sets used in the book (as far as publicly available)
+- An errata file (obviously under continuous development)
+
+The book is mainly build on R code, but also contains some Python code. 
 
 Please feel free to contact us for feedback or questions or if you find any errors in the code. We are happy to consider any suggestions for improvement; simply submit a pull request. 
 
@@ -44,3 +50,4 @@ The authors of the book wish you success with your projects and happy coding!
 
 Best
 Julian & Anna
+Mannheim and Munich, July 2025

@@ -1,23 +1,26 @@
 ---
-title: "Chapter5 Exercises"
+title: "Chapter 5 Exercises"
 author: "Julian Bernauer"
-date: "Last edited: 2025-07-01"
+date: "Last edited: 2025-07-11"
 output:
   pdf_document: default
   word_document: default
 ---
 
 
-
 1. Visit https://huggingface.co/docs/transformers/en/index, the home of many transformers models at Hugging Face, a machine learning platform and company. Find out what the CamemBERT model is and give an example of its application.
 
+*Answer Exercise 1*:
+
 - CamemBERT is a French language model based on the BERT architecture, designed to understand and generate text in French. It is pre-trained on a large corpus of French text and can be fine-tuned for various natural language processing tasks such as text classification, named entity recognition, and sentiment analysis. 
-- An example of its application could be using CamemBERT to classify the sentiment of French tweets as positive, negative, or neutral.
+- An example of its application could be using CamemBERT to classify the sentiment of French posts on Bluesky as positive, negative, or neutral.
 
 
 2. Load the quanteda.textmodels package. Go to https://tutorials.quanteda.io/ machine-learning/wordscores/ and replicate the quanteda Wordscores tutorial.
 
+*Answer Exercise 2*:
 
+```{r }
 require(quanteda)
 require(quanteda.textmodels)
 require(quanteda.textplots)
@@ -43,41 +46,41 @@ pred_ws <- predict(tmod_ws, se.fit = TRUE, newdata = dfmat_ger)
 
 # plot
 textplot_scale1d(pred_ws)
+```
 
 
+3. Install and set up the grafzahl package on your computer. Run ?grafzahl and read the files. Run the basic example provided in the package ('unciviltweets' data) and try to interpret the output.
 
-3. Install and set up the grafzahl package on your computer. Run ?grafzahl and read the files. Run the basic example provided in the package (‘unciviltweets’ data) and try to
-interpret the output.
+*Answer Exercise 3*: See https://github.com/gesistsa/grafzahl for reference. 
 
-
-### Exercise 3 - see https://github.com/gesistsa/grafzahl
-
-# Install grafzahl package
+```{r }
+# Uncomment the following line to install the grafzahl package if not already installed
 # install.packages("grafzahl")
 
-# Load the package
+# load the package
 library(grafzahl)
 
-# Get help documentation
+# get help documentation
 ?grafzahl
 
-# Load the unciviltweets example data
+# load the unciviltweets example data
 data("unciviltweets")
 
-# Examine the data structure
+# examine the data structure
 head(unciviltweets)
 str(unciviltweets)
 
-# Run the basic grafzahl example
-# Train a model to classify civil vs uncivil tweets
+# run the basic grafzahl example
+# train a model to classify civil vs uncivil tweets
+# note: you may want to specify a output directory for the model
+# also note: the model needs quite some time to train, depending on your machine and the data size (in my case: several hours)
 
 library(quanteda)
 model1 <- grafzahl(unciviltweets, model_type = "bertweet", model_name = "vinai/bertweet-base")
 
-# Make predictions on the training data
+# make predictions on the training data
 predictions <- predict(model1)
 
-# View the results
+# view the results
 head(predictions)
-
-
+```

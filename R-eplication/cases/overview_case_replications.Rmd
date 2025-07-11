@@ -1,7 +1,5 @@
-# Chapter , Case 
+# Chapter XX, Case XX
 
-External resource: github 
+External resource: GitHub 
 
-
-
-
+[...]
