@@ -1,7 +1,7 @@
 ---
 title: "Chapter2_exercises"
 author: "Julian Bernauer"
-date: "Last edited: 2025-06-23"
+date: "Last edited: 2025-07-11"
 output:
   pdf_document: default
   word_document: default
@@ -11,29 +11,36 @@ output:
 1. Install and load the quanteda package into R. Call the help function for the package
 and have a look.
 
+*Answer Exercise 1*
+
 ```{r}
 install.packages("quanteda")   
 library(quanteda)
 help(package = "quanteda")  
 ```
 
-Note:
+Notes:
 - Before you can install the package, you need to have R and for convenience some editor on your computer.
-- Be aware that quanteda is split into several sub-packages, where quanteda.textmodels, quanteda.textstats, and quanteda.textplots provide additional functionality. Check out https://quanteda.io/ for more information such as the development of quanteda.sentiment and quanteda.tidy. 
-- Select a CRAN mirror that is close to your location when installing packages. In RStudio, you can also click on the Packages tab in the bottom right corner and search for quanteda.
+- Be aware that quanteda is split into several sub-packages, where quanteda.textmodels, quanteda.textstats, and quanteda.textplots provide additional functionality. Check out https://quanteda.io/ for more information such as the state of development of quanteda.sentiment and quanteda.tidy. 
+- Select a CRAN mirror that is close to your location when installing packages (if you mind). In RStudio, you can also click on the 'Packages' tab in the bottom right corner and search for quanteda.
 
 
 2. Create a few text files of your choosing and read them into R with the readtext()
 command. Convert the data frame object into a corpus and summarise what you have.
 
-- Example text files could be journal abstracts, poems, or any other text you find interesting. You can create these files in a text editor and save them with a .txt extension.
 
-The readtext command: 
+*Answer Exercise 2*: Example text files could be journal abstracts, poems, or any other text you find interesting. You can create these files in a text editor and save them with a .txt extension.
 
+Load the necessary libraries: 
 ```{r}
+library(quanteda)
+library(quanteda.textplots)
 library(readtext)
-practice_texts <- readtext("C:/Users/homeoffice/OneDrive - uni-mannheim.de/SAGE-QTAUR/SAGE-QTAUR/Data/chapter1/exercise1_2/", encoding = "UTF8")
-practice_texts
+```
+
+Reading texts from a directory using the readtext command: 
+```{r}
+practice_texts <- readtext("./Data/chapter2/exercise2_2/", encoding = "UTF8")
 ```
 
 Create a corpus from the data frame:
@@ -42,12 +49,10 @@ practice_corpus <- corpus(practice_texts)
 summary(practice_corpus)
 ```
 
-- Alternatively, use R to create a character vector with multiple texts: 
+Alternatively, use R to create a character vector with multiple texts: 
 
 ```{r}
-texts <- c("This is the first text. It is quite short.",
-            "Here is another text. It is a bit longer than the first one.",
-            "Finally, this is the third text. It contains more information and is the longest of all three.")
+texts <- c("We the People of the United States, in order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.","All legislative Powers herein granted shall be vested in a Congress of the United States, which shall consist of a Senate and House of Representatives.","The President, Vice President and all Civil Officers of the United States, shall be removed from Office on Impeachment for and Conviction of, Treason, Bribery, or other high Crimes and Misdemeanors.")
 doc_id <- c("text1", "text2", "text3")
 df_texts <- data.frame(doc_id = doc_id, text = texts, stringsAsFactors = FALSE)
 df_texts
@@ -56,3 +61,23 @@ df_texts
 3. Convert the corpus into a dfm, remove stopwords and display a word cloud. Does it tell
 you something meaningful about the texts?
 
+*Answer Exercise 3*: The word cloud will show the most frequent words in the texts, excluding stopwords. It can give you a visual representation of the main themes or topics present in the texts. For example, if certain words appear larger than others, they are more frequently used and may indicate key concepts or subjects discussed in the texts. Make sure to load the necessary libraries (see above). 
+
+Convert corpus to dfm and remove stopwords. Note the use of the `tokens()` function to tokenize the texts before creating the dfm:
+```{r}
+dfm_texts <- dfm_remove(dfm(tokens(practice_corpus, remove_punct = TRUE)), stopwords(language = "en"))
+# show the dfm
+dfm_texts
+```
+
+Display a word cloud
+```{r}
+# note how the default settings would only display a few words (those appearing at least three times)
+# textplot_wordcloud(dfm_texts)
+# adjust the settings to display more words
+textplot_wordcloud(dfm_texts, min_count=1, max_words = 100, random_order = FALSE, color = "blue", comparison = FALSE)
+```   
+
+See https://quanteda.io/articles/pkgdown/examples/plotting.html for a quanteda example. 
+
+The wordcloud splits everyhing into a bag of words and weighs by frequencies, which does not help much given a short text. However, it can still give you a rough idea of the most common words used in the texts. The human brain is very good at recognizing patterns, so you might be able to spot some common themes or topics already. Here, the most frequent words are "United", "States", "Congress", and "President", which suggests that the texts are likely related to the U.S. Constitution or government structure. Indeed, we have some classic sentences from the U.S. Constitution in the example texts. The words read kind of awkward in 2025. 
