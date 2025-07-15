@@ -1,6 +1,6 @@
 ---
-title: "Chapter6_exercises"
-author: "Anna Wohlmann"
+title: "Chapter 6 Exercises"
+author: "Anna Wohlmann and Julian Bernauer"
 date: "2025-01-07"
 output: pdf_document
 ---

@@ -48,6 +48,7 @@ Make sure to first use the tools we gave you in the book to figure out the issue
 
 The authors of the book wish you success with your projects and happy coding!
 
-Best
+Best,  
 Julian & Anna
+
 Mannheim and Munich, July 2025
