@@ -3,7 +3,9 @@
 
 # SAGE-QTAUR
 
-This repository accompanies the book "Quantitative Text Analysis Using R" by Julian Bernauer and Anna Wohlmann published by [SAGE](https://us.sagepub.com/en-us/nam/quantitative-text-analysis-using-r/book265646) in March 2025.
+This repository accompanies the book "Quantitative Text Analysis Using R" by Julian Bernauer and Anna Wohlmann 
+<published by <a href="https://us.sagepub.com/en-us/nam/quantitative-text-analysis-using-r/book265646" target="_blank">SAGE</a></p>
+in March 2025.
 
 It contains: 
 
