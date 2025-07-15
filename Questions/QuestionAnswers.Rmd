@@ -17,18 +17,33 @@ Actually, Git has been invented by Linus Torvalds, the creator of Linux, to mana
 ## Chapter 2
 
 1) What is CRAN?
-On CRAN (https://cran.r-project.org/) you can find most R packages.
 
-CRAN ("The Comprehensive R Archive Network") hosts R packages, you can check the CRAN site of a package for more information on the package, including information on how to cite it. 
-This page as all available packages by name: https://cran.r-project.org/web/packages/available_packages_by_name.html
+R is open source software, and the R community has created a large number of packages to extend its functionality. CRAN ("The Comprehensive R Archive Network") hosts R packages (see https://cran.r-project.org/). You can check the CRAN site of a package for more information on the package, including information on how to cite it, bug reports, manuals, and examples. This page as all available packages by name: https://cran.r-project.org/web/packages/available_packages_by_name.html. CRAN also ensures that packages are tested and meet certain quality standards before they are made available to the public. If you want to create your own package, you can use the `devtools` package to help you with the process, and after meeting certain requirements, you can submit your package to CRAN for inclusion in the repository after it has been (relatively strictly) peer-reviewed. 
+
+Often, packages also have a GitHub repository where you can find the source code, documentation, and issues related to the package. For example, see Chun-Hong Chan's `grafzahl` package ('Gracious R Analytical Framework for Zappy Analysis of Human Languages') at https://github.com/gesistsa/grafzahl, which has its presence on CRAN under https://cran.r-project.org/web/packages/grafzahl/index.html.  
+
+Also note that some packages are not available on CRAN, but on GitHub. You can install these packages using the `remotes` package, which allows you to install packages directly from GitHub repositories. For example, you can use `remotes::install_github("username/repository")` to install a package from a specific GitHub repository.
 
 
 2) What does it mean when a document-feature matrix is "sparse"?  
 
-A document-feature matrix is the numerical representation of a text, storing the number of occurrences of words or other tokens cross texts. As especially for shorter texts, many words will not appear at all, entries with '0' can be plenty. The more zeros there are, the more sparse the 
+A document-feature matrix is the numerical representation of a text, storing the number of occurrences of words or other tokens cross texts. As especially for shorter texts, many words will not appear at all, entries with '0' can be plenty. The more zeros there are, the more sparse the matrix. 
+
 
 3) Discuss the pros and cons of wordclouds. 
 
+Wordclouds are a popular way to visualize the most frequent words in a text corpus. They can be visually appealing and provide a quick overview of the most prominent terms. They also have sort of a bad reputation, not unlike pie charts.
+
+- **Pros**:
+  - Easy to create and interpret.
+  - Visually engaging and can highlight key terms.
+  - Useful for exploratory data analysis to identify prominent themes.  
+- **Cons**:
+    - Do not provide context or meaning of words.
+    - Can be misleading if not properly scaled or if stopwords are not removed.
+    - Do not account for co-occurrence patterns.
+
+In sum, wordclouds can be useful for exploration and creating interest. For a more thorough text analysis, however, they should be used with caution and in combination with other methods that provide more context and meaning.
 
 
 ## Chapter 3
@@ -50,52 +65,106 @@ What did he do wrong?
 
 These are encoding errors. Possible solutions: Sören should save the text file in UTF-8; Sören should set the standard encoding of R files to UTF-8; Sören should add encoding="UTF8" when reading in the file.
 
+
 ## Chapter 4
 1) What is the dplyr package good for in R?
 
-2) Why does treating texts as a BOW pose problems in the context of sentiment analysis?
-How can these problems be countered?
+The `dplyr` package is part of the tidyverse and is used for data manipulation in R. It provides a set of functions that allow users to easily filter, select, arrange, mutate, and summarize data frames. The package is designed to work with data in a way that is intuitive and efficient. See https://dplyr.tidyverse.org/ for more information and tutorials.
+
+2) Why does treating texts as a BOW pose problems in the context of sentiment analysis? How can these problems be countered?
+
+The bag-of-words (BOW) approach treats texts as collections of words without considering their order or context. This can lead to problems in sentiment analysis because it ignores the nuances of language, such as negation, sarcasm, and word order, which can significantly affect the sentiment expressed in a text. For example, "I love this product" and "I don't love this product" would be treated similarly in a BOW model, despite having opposite sentiments. Or consider the simple example 'good' versus 'not good'. To counter these problems, we can use more advanced techniques such as incorporating n-grams (which capture sequences of words), using sentiment lexicons that account for negation, or switch to e.g. transformers models that consider word order and context. These approaches help capture the subtleties of language and improve the accuracy of sentiment analysis.
+
 
 3) What is the difference between lexical diversity and readability?
+
+Lexical diversity refers to the variety of unique words used in a text relative to the total number of words. It is a measure of how diverse the vocabulary is within a text. Higher lexical diversity indicates a richer vocabulary and more varied language use. In Chapter 4, one formula used for lexical diversity is the Type-Token Ratio (TTR), which is calculated as the number of unique words (types) divided by the total number of words (tokens) in a text.
+```{r}  
+library(quanteda.textstats)
+text <- c("This is a sample text.", "This text is another example where text appears two times.")    
+dfm <- dfm(tokens(text))
+ttr <- textstat_lexdiv(dfm, measure = "TTR")
+print(ttr)      
+```
+
+Readability, on the other hand, refers to how easy or difficult a text is to read and understand. It is often measured using formulas that consider factors such as sentence length, word length, and syllable count. Readability scores indicate how accessible a text is. In Chapter 4, a formula used for readability is the automated readability index (ARI), which is which is empirically established from the average sentence length (ASL) and the average word length (AWL) as 0.5ASL + 4.71AWL - 21.43 (see https://quanteda.io/reference/textstat_readability.html): 
+```{r}
+library(quanteda.textstats)
+text <- c("Apart from any fair dealing for the purposes of research, private study, or criticism or review, as permitted under the Copyright, Designs and Patents Act, 1988, this publication may not be reproduced, stored or transmitted in any form, or by any means, without the prior permission in writing of the publisher, or in the case of reprographic reproduction, in accordance with the terms of licences issued by the Copyright Licensing Agency. Enquiries concerning reproduction outside those terms should be sent to the publisher.", "The chapter introduces quantitative text analysis (QTA) for R as tackled in this textbook and gives a brief tour of the book. The web resources and learning features of the book are introduced, as well as some building blocks of QTA in R, specifically the quanteda R package.")
+corpus <- corpus(text)
+ari <- textstat_readability(corpus, measure = "ARI")
+print(ari)
+```
+
+Given the formula, interpretation is that higher values indicate more difficult texts, while lower values indicate easier texts. The ARI is designed to be a quick and easy way to assess the readability of a text, but it may not capture all aspects of readability, such as the complexity of vocabulary or the coherence of ideas.
+
 
 ## Chapter 5
 1) What are the defining features of supervised machine learning models for text?
 
+Mainly, supervised machine learning models for text rely on labeled data for training. They learn patterns and relationships from the training data to make predictions or classifications on new, unseen data. These models require a predefined set of classes or labels to train on, and they aim to minimize the error in predicting these labels. Examples of supervised models include logistic regression, support vector machines, and neural networks. In QTA, supervised models are often used for tasks like sentiment analysis, topic classification, or named entity recognition.
+
+Note that supervised models can also be used for scaling, such as in the case of Wordscores, where the model learns to scale texts based on their relative positions in a predefined ideological space. Also, while Wordscores can be considered a supervised model as reference scores are provided, the external information (such as ideological positions of texts) is very sparse compared to say the training data needed for a transformers model like BERT. 
+
+
 2) In which ways does BERT consider the context of words as compared to a BOW approach?
+
+BERT (Bidirectional Encoder Representations from Transformers) is a transformer-based model that considers the context of words in a text by using attention mechanisms. Unlike a bag-of-words (BOW) approach, which treats words as independent tokens without considering their order or context, BERT captures the relationships between words in a sentence by looking at the entire context simultaneously. BERT uses a bidirectional approach, meaning it considers both the left and right context of a word when generating its representation. This allows BERT to understand the meaning of a word based on its surrounding words, which is crucial for capturing nuances in language, such as polysemy (words with multiple meanings) and context-dependent meanings. In contrast, BOW ignores word order and context, leading to a loss of information about how words relate to each other in a sentence.
+
 
 3) Why is the scale produced by Wordscores hard to understand?
 
+Wordscores requires known positions for some texts, which are then propagated to the others by comparing the word frequencies. In Wordscores, positions assigned to documents with reference scores and other documents are not directly comparable, as common words found in all texts receive mean scores which results in them clustering towards the middle. The rescaling option in the original variant (rescaling = "lbg") assimilates the dispersion metrics of the reference and other scores (Laver, Benoit and Garry 2003, 316). This does not allow for a direct interpretation of the scale, as the scores are relative to the reference texts (and change when replacing them) and do not have a fixed meaning. 
+
+
 ## Chapter 6
 1)	What are the defining features of unsupervised machine learning models for text?
+
 Unsupervised models do not rely on labeled data for training, such as supervised models do. They predict topics, reduce dimensions, or scale text based on its own structure, applying some similarity measure, for example, co-occurrence of words. 
 
 2) What is the difference between word stemming and lemmatisation?	
+
 Word stemming means going back to the word stem of a word by removing pre- and suffixes and lemmatizations turns the word back into its lemma, the way it is found in a dictionary. While word stems do not need to be valid words in the language, the lemma of a word is.
 
 3)	How is Wordfish identified?
+
 Wordfish identifies underlying dimensions or ideological positions of text through a bag-of-word approach. It creates a scale out of the texts used based on the relative distribution of words. It only requires you to rank one text as further right on the requested scale than one other, therefore the model is classified as unsupervised scaling.
+
+
 
 ## Chapter 7
 1) Why is validation so important for QTA?
+
 In QTA we try to make a model understand the complex concept of text. In texts, words have multiple meanings changing based on the context, they represent different emotions and include concepts like sarcasm or cultural references and the biases of the author. But our models only understand words as vectors or the relative distribution of words, those are always simplifications of the actual meaning of text. Therefore, we need to know if the measure we apply actually measures what we think it measured before we can draw conclusions from the results.
 
 2) Why do we split our data into a training set and a test set?
+
 Machine learning models learn patterns and relationships from the data they are trained on. However, we need to ensure that our model can generalize well to new, unseen data beyond the training set.
 By separating our data into a training set, used to train the model, and a test set, used to evaluate its performance, we can assess how well the model generalizes to new data. This process helps us guard against overfitting, where the model learns to memorize the training data rather than capturing underlying patterns.
 
 3) What is underfitting?
+
 Underfitting is the opposite of overfitting. Instead of learning the text we train on too well, it cannot capture the underlying patterns or structure in the training data. This means that the model would also perform poorly on unseen data. In essence, the model fails to learn the complexities of the data and makes overly simplistic predictions. Reasons for underfitting are models that are too simple for complex data, insufficient training data, or the iterations are set too low (for example, in LDA where iterations are a hyperparameter).
+
+
 
 ## Chapter 8
 1) What are the reticulate ways of using Python?
-First,  
-Second,  
-Third,  
+
+1. Using Python chunks in R Markdown 
+2. An interactive Python console within R using repl_python() 
+3. Using import(), allowing the use of Python module functions in R
+4. Sourcing Python scripts with source_python().
 
 2) What does REPL stand for?
+
 REPL stands for Read-Eval-Print Loop. It is an interactive programming environment that allows users to enter code, evaluate it, and see the results immediately.
 
 3) Which Python packages are popular in natural language processing?
 
+Many of them. Among the most popular ones are NLTK (Natural Language Toolkit), spaCy, and gensim. These packages provide tools for tokenization, stemming, lemmatization, part-of-speech tagging, named entity recognition, and topic modeling, among other tasks. Other widely used packages include scikit-learn (for machine learning), numpy (for numerical operations), pandas (for data manipulation), and transformers (for state-of-the-art deep learning models). They are widely used in the field of natural language processing (NLP) and can be integrated with R using the reticulate package for seamless interoperability between R and Python.
+
+
 ## Chapter 9
+
 The Chapter 9 questions are reflective questions for yourself; your answer is always correct!

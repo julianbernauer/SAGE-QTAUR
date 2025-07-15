@@ -1,6 +1,6 @@
 ---
-title: "Chapter 8: Exercises"
-author: "Julian Bernauer"
+title: "Chapter 8 Exercises"
+author: "Julian Bernauer and Anna Wohlmann"
 date: "Last edited: 2025-07-11"
 output:
   pdf_document: default

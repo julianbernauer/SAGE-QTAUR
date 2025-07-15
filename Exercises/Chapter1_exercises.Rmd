@@ -1,3 +1,12 @@
+---
+title: "Chapter 1 exercises"
+author: "Julian Bernauer and Anna Wohlmann"
+date: "Last edited: 2025-07-15"
+output:
+  pdf_document: default
+  word_document: default
+---
+
 1. Visit the quanteda documentation at https://quanteda.io/reference/index.html and look
 up what the R command corpus_sample() does.
 
