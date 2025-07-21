@@ -37,3 +37,12 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Data - until further notice
+data/
+# But include specific files (use ! to negate)
+!data/chapter1/
+
+
+# Temporary files
+runs/ 
